@@ -19,14 +19,6 @@ conn = mysql.connector.connect(
 def api_attractions():
 	page = int(request.args.get("page"))
 	keyword = request.args.get("keyword")
-	# if keyword:
-	# 	sql = "SELECT * FROM attraction WHERE category = %s OR name LIKE '%' %s '%' LIMIT %s,%s" #'%' %s '%'中間要空隔
-	# 	value = (keyword, keyword, (page * 12), 12)
-	# else:
-	# 	sql = "SELECT * FROM attraction LIMIT %s,%s"
-	# 	value = ((page * 12), 12)
-	# cur = conn.cursor()
-	# cur.execute(sql, value)
 	cur = conn.cursor(buffered=True)
 	if keyword:
 		sql = "SELECT * FROM attraction WHERE category = %s OR name LIKE '%' %s '%' LIMIT %s,%s" #'%' %s '%'中間要空隔
@@ -77,7 +69,7 @@ def api_attractions():
 					"data" : list})
 	except:
 		return jsonify({"error": True,
-				"message": "Internal Server Error"}, 500)
+				"message": "Internal Server Error"}), 500
 
 @app.route("/api/attraction/<id>", methods = ["GET"])
 def api_attractions_id(id):
@@ -102,10 +94,10 @@ def api_attractions_id(id):
 			return jsonify({"data" : result})
 		else:
 			return jsonify({"error": True,
-  				"message": "id does not exist"}, 400)
+  				"message": "id does not exist"}), 400
 	except:
 		return jsonify({"error": True,
-				"message": "Internal Server Error"}, 500)
+				"message": "Internal Server Error"}), 500
 		
 @app.route("/api/categories", methods = ["GET"])
 def api_categories():
@@ -123,7 +115,7 @@ def api_categories():
 		return jsonify({"data" : list})
 	except:
 		return jsonify({"error": True,
-				"message": "Internal Server Error"}, 500)
+				"message": "Internal Server Error"}), 500
 
 # Pages
 @app.route("/")
