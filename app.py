@@ -119,7 +119,6 @@ def api_categories():
 		while i < len(query):
 			result = query[i][0]
 			list.append(result)
-			print(list)
 			i = i + 1
 		return jsonify({"data" : list})
 	except:
