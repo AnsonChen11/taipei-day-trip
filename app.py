@@ -79,7 +79,7 @@ def api_attractions():
 		return jsonify({"error": True,
 				"message": "Internal Server Error"}, 500)
 
-@app.route("/api/attractions/<id>", methods = ["GET"])
+@app.route("/api/attraction/<id>", methods = ["GET"])
 def api_attractions_id(id):
 	sql = "SELECT * FROM attraction WHERE id = %s"
 	cur = conn.cursor()
