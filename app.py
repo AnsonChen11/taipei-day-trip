@@ -4,43 +4,82 @@ app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"]=False #可避免json自動排序
 
+
 import mysql.connector, math
-conn = mysql.connector.connect(
-  host = "localhost",
-  user = "root",
-  password = "12345678",
-  database = "taipeitrip",
-  charset = "utf8",
+from mysql.connector import pooling
+# conn = mysql.connector.connect(
+#   host = "localhost",
+#   user = "root",
+#   password = "12345678",
+#   database = "taipeitrip",
+#   charset = "utf8",
+# )
+#create connection pool
+connection_pool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name = "taipeitrip_pool",
+    pool_size = 5,
+    pool_reset_session = True,
+    host = "localhost",
+	user = "root",
+	password = "12345678",
+	database = "taipeitrip",
+	charset = "utf8",
 )
+
+#將 .get_connection() 存入 conn function
+def conn():
+	try:
+		c = connection_pool.get_connection()
+		return c
+	except:
+		print ("connection error")
 
 
 # API
 @app.route("/api/attractions", methods = ["GET"])
 def api_attractions():
+	num = 0
 	page = int(request.args.get("page"))
 	keyword = request.args.get("keyword")
-	cur = conn.cursor(buffered=True)
 	if keyword:
+		c = conn() #連線 connetion pool
+		cur = c.cursor()
+		# cur = conn.cursor(buffered=True)
 		sql = "SELECT * FROM attraction WHERE category = %s OR name LIKE '%' %s '%' LIMIT %s,%s" #'%' %s '%'中間要空隔
 		value = (keyword, keyword, (page * 12), 12)
 		cur.execute(sql, value)
 		query = cur.fetchall()
+		cur.close()
 
+		cur = c.cursor()
+		# cur = conn.cursor(buffered=True)
 		count_sql = "SELECT COUNT(*) FROM attraction WHERE category = %s OR name LIKE '%' %s '%'"
 		value = (keyword, keyword)
 		cur.execute(count_sql, value)
 		num = cur.fetchone()[0]
-		
+		cur.close()
+		c.close()
+
 	else:
+		c = conn()
+		cur = c.cursor()
+		# cur = conn.cursor(buffered=True)
 		sql = "SELECT * FROM attraction LIMIT %s,%s"
 		value = ((page * 12), 12)
 		cur.execute(sql, value)
 		query = cur.fetchall()
+		cur.close()
+		c.close()
 
+		c = conn()
+		cur = c.cursor()
+		# cur = conn.cursor(buffered=True)
 		count_sql = "SELECT count(*) FROM attraction"
 		cur.execute(count_sql)
 		num = cur.fetchone()[0]
-		
+		cur.close()
+		c.close()
+
 	lastPage = math.ceil(num / 12) #無條件進位
 	nextPage = page + 1
 	if nextPage >= lastPage:
@@ -73,8 +112,10 @@ def api_attractions():
 
 @app.route("/api/attraction/<id>", methods = ["GET"])
 def api_attractions_id(id):
+	c = conn()
+	cur = c.cursor()
+	# cur = conn.cursor(buffered=True)
 	sql = "SELECT * FROM attraction WHERE id = %s"
-	cur = conn.cursor()
 	cur.execute(sql, (id,))
 	query = cur.fetchone()
 	try:
@@ -98,13 +139,20 @@ def api_attractions_id(id):
 	except:
 		return jsonify({"error": True,
 				"message": "Internal Server Error"}), 500
+	finally:
+		cur.close()
+		c.close()
 		
 @app.route("/api/categories", methods = ["GET"])
 def api_categories():
+	c = conn()
+	cur = c.cursor()
+	# cur = conn.cursor(buffered=True)
 	sql = "SELECT DISTINCT category FROM attraction"
-	cur = conn.cursor()
 	cur.execute(sql)
 	query = cur.fetchall()
+	
+
 	i = 0
 	list = []
 	try:
@@ -116,6 +164,9 @@ def api_categories():
 	except:
 		return jsonify({"error": True,
 				"message": "Internal Server Error"}), 500
+	finally:
+		cur.close()
+		c.close()
 
 # Pages
 @app.route("/")
