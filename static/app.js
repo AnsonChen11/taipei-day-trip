@@ -63,12 +63,10 @@ let func = {
         if(keyword){
             if(nextPageAndKeyword == true){
                 url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
-                console.log(url)
             }
             else{
                 nextPage = 0
                 url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
-                console.log(url)
             }
         }
         fetch(url)
@@ -92,7 +90,6 @@ let func = {
                     container.removeChild(container.firstChild);   
                     }
                 }
-                console.log(data)
                 for(let i = 0; i < data.data.length; i++){
                     const newCard = document.createElement("article");
                     newCard.className = "card";
