@@ -2,7 +2,7 @@ let nextPage = 0;
 let nextPageAndKeyword = false
 //loading default content
 window.onload = async function(){ 
-    await fetch("http://127.0.0.1:3000/api/attractions?page=" + nextPage)
+    await fetch("/api/attractions?page=" + nextPage)
     .then(res => res.json())
     .then(data => {
         for(let i = 0; i < data.data.length; i++){
@@ -31,7 +31,7 @@ window.onload = async function(){
         }
         nextPage = data.nextPage;
     })
-    await fetch("http://127.0.0.1:3000/api/categories")
+    await fetch("/api/categories")
     .then(res => res.json())
     .then(menu =>{
         for(i = 0; i < menu.data.length; i++){
@@ -58,16 +58,16 @@ let func = {
     fetchData: function(keyword){
         const container = document.querySelector(".container");
         if(!keyword){
-            url = "http://127.0.0.1:3000/api/attractions?page=" + nextPage
+            url = "/api/attractions?page=" + nextPage
         }
         if(keyword){
             if(nextPageAndKeyword == true){
-                url = "http://127.0.0.1:3000/api/attractions?page=" + nextPage + "&keyword=" + keyword
+                url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
                 console.log(url)
             }
             else{
                 nextPage = 0
-                url = "http://127.0.0.1:3000/api/attractions?page=" + nextPage + "&keyword=" + keyword
+                url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
                 console.log(url)
             }
         }
