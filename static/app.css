@@ -18,7 +18,7 @@ nav{
     z-index: 1000;
     background-color: #FFFFFF;
 }
-nav a{
+nav a, .container a{
     text-decoration: none;
 }
 .view{

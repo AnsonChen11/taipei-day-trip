@@ -1,0 +1,251 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    padding-top: 54px;
+    margin: 0;
+}
+nav{
+    height: 54px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: #FFFFFF;
+    border: 1px solid #E8E8E8;
+}
+nav a{
+    text-decoration: none;
+}
+.view{
+    width: 1200px;
+    height: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.name{
+    color: #448899;
+    font-size: 30px;
+    margin-left: 10px;
+}
+.items{
+    display: flex;
+    font-weight: 500;
+}
+.item{
+    padding: 10px;
+    gap: 10px; 
+    color: #666666;
+}
+main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section{
+    width: 100%;
+    padding-top: 50px;
+    color: #666666;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+.btn_leftArow, .btn_righttArow{
+    width: 36px;
+    height: 36px;
+}
+.slideShowContainer, .slideShow, img{
+    width: 540px;
+    height: 406px;
+    padding-right: 15px;
+}
+.slideShowContainer{
+    position: relative;
+}
+.slideShow{
+    display: none;
+}
+.previous img, .next img{
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    top: 50%;
+    margin-top: -22px;
+    padding: 16px;
+    transition: 0.1s ease;
+    user-select: none;
+}
+.previous img{
+    position: absolute;
+}
+.next img{
+    position: absolute;
+    right: 15px;
+}
+.previous:hover, .next:hover{
+    background-color: rgba(146, 146, 146, 0.8);
+}
+.dots{
+    position: absolute;
+}
+.dot{
+    position: relative;
+    top: 375px;
+    left: -320px;
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: rgb(255, 255, 255, 0.6);
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+.active, .dot:hover{
+    background-color: rgb(0, 0, 0);
+}
+.fade{
+    animation-name: fade;
+    animation-duration: 0.5s;
+}
+@keyframes fade{
+    from {opacity: .4}
+    to {opacity: 1}
+}
+img{
+    object-fit: cover;
+}
+.profile{
+    width: 600px;
+    height: 400px;
+    padding-left: 15px;
+}
+.attraction{
+    font-size: 24px;
+}
+.category{
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.booking{
+    background-color: rgba(232,232,232);
+    padding: 20px;
+    border-radius: 5px;
+    line-height: 40px
+}
+.details{
+    padding-bottom: 20px;
+}
+.subtitle{
+    font-weight: 500;
+}
+.date{
+    width: 193px;
+    height: 35px;
+}
+.schedule{
+    display: flex;
+}
+.schedule input[type="radio"]{
+    accent-color: #448899;
+    width: 22px;
+    margin-right: 4px;
+}
+.schedule label{
+    font-weight: 500;
+}
+.fee{
+    display: flex;
+    padding-bottom: 10px;
+}
+.price{
+    padding-left: 5px;
+    font-weight: 500;
+}
+.btn{
+    width: 154px;
+    height: 36px;
+    font-size: 19px;
+    color: #FFFFFF;
+    background-color: #448899;
+    border-radius: 5px;
+    border-style: hidden;
+    vertical-align: middle
+}
+button:hover{
+    background-color: #1c758b;
+}
+hr{
+    max-width: 1150px;
+    border: 1px solid #E8E8E8;
+}
+article{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    font-weight: 400;
+    line-height: 23px;
+    color: #666666;
+}
+.information{
+    width: 1200px
+}
+.description, .infos_address, .infos_transport{
+    margin: 20px;
+}
+.infos_address, .infos_transport{
+    padding-top: 20px;
+}
+.list{
+    font-weight: 700;
+}
+footer{
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    height: 104px;  
+    background: #757575;
+    color: #FFFFFF;
+}
+
+@media(max-width : 1200px){
+    .section{
+        padding-top: 0px;
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+    .slideShowContainer, .slideShow, img{
+        padding-right: 0px;
+        width: 100%;
+    }
+    .profile{
+        padding-left: 0px;
+        padding-top: 20px;
+        width: 90%;
+    }
+    .previous img{
+        
+    }
+    .next img{
+        right: 0px;
+    }
+    .dot{
+        top: -30px;
+        left: 0px
+    }
+}
+@media(max-width : 600px){
+
+}  

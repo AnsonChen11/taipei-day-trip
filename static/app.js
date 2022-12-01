@@ -6,6 +6,9 @@ window.onload = async function(){
     .then(res => res.json())
     .then(data => {
         for(let i = 0; i < data.data.length; i++){
+            const link = document.querySelectorAll(".link");
+            link[i].href = "/attraction/" + data.data[i].id;
+
             const spotImage = document.querySelectorAll(".spotImage");
             const spotImageDiv = document.createElement("img");
             spotImageDiv.src = data.data[i].images[0];
@@ -61,12 +64,15 @@ let func = {
             url = "/api/attractions?page=" + nextPage
         }
         if(keyword){
+            console.log(keyword)
             if(nextPageAndKeyword == true){
                 url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
+                console.log("第一個", url)
             }
             else{
                 nextPage = 0
                 url = "/api/attractions?page=" + nextPage + "&keyword=" + keyword
+                console.log("第二個", url)
             }
         }
         fetch(url)
@@ -74,6 +80,7 @@ let func = {
             return res.json();
         }).then(data => {
             if(data.data[0] === undefined){ //Not found data
+                console.log(data)
                 observer.unobserve(target);
                 while(container.firstChild){
                     container.removeChild(container.firstChild);   
@@ -91,6 +98,10 @@ let func = {
                     }
                 }
                 for(let i = 0; i < data.data.length; i++){
+                    const newLink = document.createElement("a")
+                    newLink.className = "link"
+                    newLink.href = "/attraction/" + data.data[i].id;
+
                     const newCard = document.createElement("article");
                     newCard.className = "card";
                     const newSpotImage = document.createElement("div");
@@ -99,8 +110,9 @@ let func = {
                     newTag.className = "tag";
                     const newInformation = document.createElement("div");
                     newInformation.className = "information";
+                    newLink.append(newCard)
                     newCard.append(newSpotImage, newTag, newInformation);
-        
+
                     const spotImageDiv = document.createElement("img");
                     spotImageDiv.src = data.data[i].images[0];
                     newSpotImage.appendChild(spotImageDiv);
@@ -119,7 +131,7 @@ let func = {
                     spotCategoryDiv.textContent = data.data[i].category;
                     newInformation.append(spotMRTDiv, spotCategoryDiv);
                     
-                    container.appendChild(newCard);
+                    container.appendChild(newLink);
                 }
             }
             nextPage = data.nextPage;
@@ -128,6 +140,8 @@ let func = {
             }
             else if(nextPage == null){
                 nextPageAndKeyword = false
+                console.log(nextPageAndKeyword)
+                console.log(nextPage)
             }
         })
     },
@@ -141,6 +155,7 @@ let func = {
 document
     .querySelector(".search button")
     .addEventListener("click", function(){
+        nextPage = 0
         func.search();
     });
 
@@ -148,6 +163,7 @@ document
     .querySelector(".search-bar")
     .addEventListener("keyup", function(event){
         if (event.key == "Enter"){
+            nextPage = 0
             func.search();
         }
     });
