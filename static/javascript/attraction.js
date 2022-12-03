@@ -15,7 +15,6 @@ window.onload = async function(){
             const spotImageImg = document.createElement("img");
             spotImageImg.src = data.data.images[i];
             spotImage[i].appendChild(spotImageImg);
-            // spotImage.insertBefore(spotImageImg, spotImage.children[0]);
 
             const dotSpan = document.createElement("span");
             dotSpan.className = "dot"
@@ -52,36 +51,46 @@ window.onload = async function(){
         transportationSpan.textContent = data.data.transport;
         transportation.appendChild(transportationSpan);
         
-        
         showSlides(slideIndex)
     })  
-    
 }
 
+//Option between morning or afternoon
+const morning = document.querySelector(".morning")
+const afternoon = document.querySelector(".afternoon")
+const price = document.querySelector(".price")
+morning.addEventListener("click", function(){
+    price.textContent = "新台幣 2000 元";
+})
+afternoon.addEventListener("click", function(){
+    price.textContent = "新台幣 2500 元";
+})
 
-function morning(){
-    const morning = document.querySelector(".price");
-    morning.innerHTML = "新台幣 2000 元";
-}
-function afternoon(){
-    const morning = document.querySelector(".price");
-    morning.innerHTML = "新台幣 2500 元";
-}
+//slideShow next or previous image
+const previous = document.querySelector(".previous")
+const next = document.querySelector(".next")
+previous.addEventListener("click", function(){
+    plusSlides(-1);
+})
+next.addEventListener("click", function(){
+    plusSlides(1);
+})
 
 
+//slide function
 function plusSlides(n){
     showSlides(slideIndex += n);
 }
 
+//dot function
 function currentSlide(n){
     showSlides(slideIndex = n);
 }
 
 function showSlides(n){
     let i;
-    let slideShow = document.querySelectorAll(".slideShow");
-    console.log(slideShow[1])
-    let dot = document.querySelectorAll(".dot");
+    const slideShow = document.querySelectorAll(".slideShow");
+    const dot = document.querySelectorAll(".dot");
     if(n > slideShow.length){ //若index超過最後一張，回到第一張
         slideIndex = 1;
     }
