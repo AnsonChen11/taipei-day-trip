@@ -18,10 +18,10 @@
     transform: translate(-50%, 0);
 }
 .signinCard{
-    height: 332px;
+    height: auto;
 }
 .loginCard{
-    height: 275px;
+    height: auto;
 }
 .loginCard, .signinCard{
     display: flex;
@@ -91,4 +91,12 @@ input{
 }
 .hint{
     cursor: pointer;
+}
+.loginErrorMessage{
+    color: rgb(250, 114, 114);
+    font-weight: 500;
+}
+.loginSuccessfulMessage{
+    color: rgb(174, 240, 188);
+    font-weight: 500;
 }

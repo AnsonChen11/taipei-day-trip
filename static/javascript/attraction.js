@@ -18,7 +18,7 @@ window.onload = async function(){
 
             const dotSpan = document.createElement("span");
             dotSpan.className = "dot"
-            dotSpan.onclick = "currentSlide(i+1)"
+            dotSpan.setAttribute("id", "dot" + i)
             dot.appendChild(dotSpan)
         }
         
@@ -66,7 +66,7 @@ afternoon.addEventListener("click", function(){
     price.textContent = "新台幣 2500 元";
 })
 
-//slideShow next or previous image
+//slide next or previous image function
 const previous = document.querySelector(".previous")
 const next = document.querySelector(".next")
 previous.addEventListener("click", function(){
@@ -75,17 +75,22 @@ previous.addEventListener("click", function(){
 next.addEventListener("click", function(){
     plusSlides(1);
 })
-
-
-//slide function
 function plusSlides(n){
     showSlides(slideIndex += n);
 }
 
-//dot function
-function currentSlide(n){
-    showSlides(slideIndex = n);
-}
+
+
+// // click dot slide image function
+// const dotNumber = document.querySelector("#dot1")
+// console.log(dotNumber)
+// dotNumber.addEventListener("click", function(){
+//     console.log("1")
+//     currentSlide(1);
+// })
+// function currentSlide(n){
+//     showSlides(slideIndex = n);
+// }
 
 function showSlides(n){
     let i;

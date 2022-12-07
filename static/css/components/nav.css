@@ -25,13 +25,14 @@ nav a, .container a{
     font-size: 30px;
     margin-left: 10px;
 }
-.items{
+.auth_menu{
     display: flex;
     font-weight: 500;
-}
-.item1, .item2{
     padding: 10px;
     gap: 10px; 
     color: #666666;
     cursor: pointer;
+}
+.auth_logout{
+    display: none;
 }
