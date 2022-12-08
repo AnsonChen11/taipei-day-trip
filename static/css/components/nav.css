@@ -1,0 +1,38 @@
+nav{
+    height: 54px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    background-color: #FFFFFF;
+    border: 1px solid #E8E8E8;
+}
+nav a, .container a{
+    text-decoration: none;
+}
+.view{
+    width: 1200px;
+    height: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.name{
+    color: #448899;
+    font-size: 30px;
+    margin-left: 10px;
+}
+.auth_menu{
+    display: flex;
+    font-weight: 500;
+    padding: 10px;
+    gap: 10px; 
+    color: #666666;
+    cursor: pointer;
+}
+.auth_logout{
+    display: none;
+}

@@ -6,41 +6,7 @@ body{
     padding-top: 54px;
     margin: 0;
     padding: 0;
-}
-nav{
-    height: 54px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    background-color: #FFFFFF;
-}
-nav a, .container a{
-    text-decoration: none;
-}
-.view{
-    width: 1200px;
-    height: 34px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.name{
-    color: #448899;
-    font-size: 30px;
-    margin-left: 10px;
-}
-.items{
-    display: flex;
-    font-weight: 500;
-}
-.item{
-    padding: 10px;
-    gap: 10px; 
-    color: #666666;
+    box-sizing: border-box;
 }
 header{
     background-image: linear-gradient(to left, #FFE6D9, #ECFFFF);
@@ -50,6 +16,9 @@ header{
     display: flex;
     justify-content: center;
     padding-top: 54px;
+}
+header{
+    position: relative;
 }
 .topImage{
     width: 1920px;
@@ -105,18 +74,12 @@ header{
     visibility: visible;
     opacity: 1;
 }
-input{
-    padding-left: 10px;
-    color: #757575;
-    font-weight: bold;
-}
 button{
     width: 60px;
     height: 46px;
     border-radius: 0px 5px 5px 0px;
     background: #448899;
     border-style: none;
-    
 }
 button:hover{
     background-color: #295a66;
@@ -217,16 +180,6 @@ main{
 }
 .category{
     margin-right: 10px;
-}
-footer{
-    margin-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    height: 104px;  
-    /* padding: 40px 843px; */
-    background: #757575;
-    color: #FFFFFF;
 }
 
 @media(max-width : 1200px){

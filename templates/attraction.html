@@ -1,34 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='attraction.css') }}">
-    <script src="{{ url_for('static', filename='attraction.js')}}" defer></script>
-    <title>台北一日遊 Taipe-day-trip</title>
+    {% include "components/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/attraction.css') }}">
+    <script src="{{ url_for('static', filename='/javascript/attraction.js')}}" defer></script>
 </head>
 <body>
-    <nav>
-        <div class="view">
-            <a class="name" href="/"><span>台北一日遊</span></a>
-            <div class="items">
-                <a class="item" href=""><span class="text">預定行程</span></a>
-                <a class="item" href=""><span class="text">登入/註冊</span></a>
-            </div>
-        </div>
-    </nav>
+    {% include "components/nav.html" %}
+    {% include "components/login.html" %}
     <main>
         <div class="section">
             <div class="slideShowContainer">
-                <a class="previous" onclick="plusSlides(-1)"><img src="/static/btn_leftArrow.png"></a>
-                <a class="next" onclick="plusSlides(1)"><img src="/static/btn_rightArrow.png"></a>
+                <a class="previous"><img src="/static/images/btn_leftArrow.png"></a>
+                <a class="next"><img src="/static/images/btn_rightArrow.png"></a>
             </div>
             <div class="dots">
                 <!-- <span class="dot" onclick="currentSlide(1)"></span> -->
             </div>
             <div class="profile">
-                <div class="booking">
+                <div class="bookingCard">
                     <div class="details">
                         <div class="title">訂購導覽行程</div>
                         <div class="subtitle">以此景點為中心的一日行程，帶您探索城市角落故事</div>
@@ -38,9 +28,9 @@
                         </div>
                         <div class="schedule">
                             <div>選擇時間：</div>
-                            <input type="radio" name="radio" value="morning" checked onclick="morning()">
+                            <input type="radio" name="radio" value="morning" class="morning" checked>
                             <label for="morning">上半天</label><br>
-                            <input type="radio" name="radio" value="afternoon" onclick="afternoon()">
+                            <input type="radio" name="radio" value="afternoon" class="afternoon">
                             <label for="afternoon">下半天</label><br>
                         </div>
                         <div class="fee">
@@ -64,7 +54,5 @@
             </div>
         </div>
     </article>
-    <footer>
-        <span>COPYRIGHT © 2021 台北一日遊</span>
-    </footer>
+    {% include "components/footer.html" %}
 </body>

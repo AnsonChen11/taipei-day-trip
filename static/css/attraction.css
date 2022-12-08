@@ -5,48 +5,15 @@ body{
     font-weight: 700;
     padding-top: 54px;
     margin: 0;
-}
-nav{
-    height: 54px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    background-color: #FFFFFF;
-    border: 1px solid #E8E8E8;
-}
-nav a{
-    text-decoration: none;
-}
-.view{
-    width: 1200px;
-    height: 34px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.name{
-    color: #448899;
-    font-size: 30px;
-    margin-left: 10px;
-}
-.items{
-    display: flex;
-    font-weight: 500;
-}
-.item{
-    padding: 10px;
-    gap: 10px; 
-    color: #666666;
+    padding: 0;
+    box-sizing: border-box;
 }
 main{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 50px;
 }
 .section{
     width: 100%;
@@ -61,7 +28,7 @@ main{
     width: 36px;
     height: 36px;
 }
-.slideShowContainer, .slideShow, img{
+.slideShowContainer, .slideShow, .slideShow img{
     width: 540px;
     height: 406px;
     padding-right: 15px;
@@ -114,13 +81,13 @@ main{
 }
 .fade{
     animation-name: fade;
-    animation-duration: 0.5s;
+    /* animation-duration: 0.25s; */
 }
 @keyframes fade{
     from {opacity: .4}
     to {opacity: 1}
 }
-img{
+.slideShow img{
     object-fit: cover;
 }
 .profile{
@@ -136,7 +103,7 @@ img{
     margin-top: 15px;
     margin-bottom: 20px;
 }
-.booking{
+.bookingCard{
     background-color: rgba(232,232,232);
     padding: 20px;
     border-radius: 5px;
@@ -209,15 +176,6 @@ article{
 .list{
     font-weight: 700;
 }
-footer{
-    margin-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    height: 104px;  
-    background: #757575;
-    color: #FFFFFF;
-}
 
 @media(max-width : 1200px){
     .section{
@@ -226,7 +184,7 @@ footer{
         height: auto;
         align-items: center;
     }
-    .slideShowContainer, .slideShow, img{
+    .slideShowContainer, .slideShow, .slideShow img{
         padding-right: 0px;
         width: 100%;
     }
