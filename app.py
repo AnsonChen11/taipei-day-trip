@@ -10,7 +10,6 @@ from mysql.connector import pooling
 
 #hash password
 from flask_bcrypt import Bcrypt
-bcrypt = Bcrypt()
 
 #connection pool
 connection_pool = mysql.connector.pooling.MySQLConnectionPool(
@@ -163,7 +162,7 @@ def api_user():
 	data = request.get_json()
 	c = conn()
 	cur = c.cursor()
-	sql = "SELECT * FROM user WHERE email = %s"
+	sql = "SELECT email FROM user WHERE email = %s"
 	cur.execute(sql, (data["email"],))
 	query = cur.fetchone()
 	cur.close()
@@ -176,6 +175,7 @@ def api_user():
 		else:
 			cur = c.cursor()
 			sql = "INSERT INTO user (name, email, password) VALUES (%s, %s, %s)"
+			bcrypt = Bcrypt()
 			hashed_password = bcrypt.generate_password_hash(password=data["password"])
 			cur.execute(sql, (data["name"], data["email"], hashed_password,))
 			c.commit()
@@ -197,13 +197,16 @@ def api_user_auth():
 		data = request.get_json()
 		c = conn()
 		cur = c.cursor()
-		sql = "SELECT * FROM user WHERE email = %s AND password = %s"
-		cur.execute(sql, (data["email"], data["password"],))
+		sql = "SELECT * FROM user WHERE email = %s"
+		cur.execute(sql, (data["email"],))
 		query = cur.fetchone()
 		cur.close()
+		bcrypt = Bcrypt()
+		passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
 		try:
-			if query:
+			if passwordIsVerified == True:
 				token = make_token(query)
+				print(token)
 				resp = make_response(jsonify({
 					"ok": True
 					}), 200)
