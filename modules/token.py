@@ -1,12 +1,18 @@
-import os, jwt, datetime
+import jwt, datetime
 from datetime import datetime, timedelta
-# from dotenv import load_dotenv
-# load_dotenv()
+import os
+from dotenv import load_dotenv
 
-# key = os.getenv("token_key")
+def token_key():
+    load_dotenv()
+    key = os.getenv("token_key")
+    print(key)
+    return key
+
 
 def make_token(query):
-    key = "AE2BF4465C7E95B4703779787616BBF1A8DE1C8D23A4755F3BA663DB9DE8E18F"
+    key = token_key()
+    print(key)
     expiretime = datetime.utcnow() + timedelta(days = 7) 
     payload = {
         "id": query[0], 
@@ -18,6 +24,6 @@ def make_token(query):
     return token
 
 def decode_token(cookiesToken):
-    key = "AE2BF4465C7E95B4703779787616BBF1A8DE1C8D23A4755F3BA663DB9DE8E18F"
+    key = token_key()
     decodeToken = jwt.decode(cookiesToken, key, algorithms=['HS256'])
     return decodeToken
