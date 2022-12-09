@@ -57,17 +57,24 @@ def api_user_auth():
 		cur.execute(sql, (data["email"],))
 		query = cur.fetchone()
 		cur.close()
-		bcrypt = Bcrypt()
-		passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
+		# bcrypt = Bcrypt()
+		# passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
 		try:
-			if passwordIsVerified == True:
-				token = make_token(query)
-				print(token)
-				resp = make_response(jsonify({
-					"ok": True
-					}), 200)
-				resp.set_cookie(key = "token", value = token, expires = time.time() + 24*60*60*7)
-				return resp
+			if query:
+				bcrypt = Bcrypt()
+				passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
+				if passwordIsVerified == True:
+					token = make_token(query)
+					resp = make_response(jsonify({
+						"ok": True
+						}), 200)
+					resp.set_cookie(key = "token", value = token, expires = time.time() + 24*60*60*7)
+					return resp
+				else:
+					return jsonify({
+					"error": True,
+					"message": "帳號或密碼錯誤"
+					}), 400
 			else:
 				return jsonify({
 					"error": True,

@@ -6,13 +6,11 @@ from dotenv import load_dotenv
 def token_key():
     load_dotenv()
     key = os.getenv("token_key")
-    print(key)
     return key
 
 
 def make_token(query):
     key = token_key()
-    print(key)
     expiretime = datetime.utcnow() + timedelta(days = 7) 
     payload = {
         "id": query[0], 
