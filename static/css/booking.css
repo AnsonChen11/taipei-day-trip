@@ -1,0 +1,136 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    padding-top: 54px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #666666;
+}
+main{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.noOrderItem{
+    color: rgb(250, 114, 114);
+    font-weight: 500;
+}
+hr{
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+li{
+    list-style-type: none;
+}
+.booking_view{
+    width: 1150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.booking_overall, .booking_contact, .booking_credit, .booking_confirm{
+    width: 980px;
+}
+.booking_subtitle{
+    font-weight: 700;
+    font-size: 19px;
+}
+.booking_overview_section{
+   display: flex;
+   padding-top: 20px;
+}
+.booking_list ul{
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.booking_attraction{
+    color: #448899;
+    font-weight: 700;
+}
+.booking_list_item{
+    font-weight: 700;
+}
+.booking_image{
+    width: 266px;
+}
+.booking_image img{
+    width: 100%;
+    object-fit: cover
+}
+.trash{
+    margin-bottom: auto;
+    margin-left: auto;
+    cursor: pointer;
+}
+.booking_contact input, .booking_credit input{
+    width: 200px;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.booking_hint{
+    font-weight: 700;
+}
+.booking_confirm{
+    font-weight: 700;
+    text-align: right;
+}
+.booking_confirm button{
+    font-weight: 400;
+    font-size: 19px;
+    color: #FFFFFF;
+    background: #448899;
+    border-radius: 5px;
+    width: 173px;
+    height: 36px;
+    border-style: hidden;
+    margin-top: 25px;
+}
+.booking_confirm button:hover{
+    background-color: #1c758b;
+    cursor: pointer;
+}
+@media(max-width : 1200px){
+    .booking_view{
+        width: 90%
+    }
+    .booking_overall, .booking_contact, .booking_credit, .booking_confirm{
+        width: 80%;
+    }
+}
+@media(max-width : 900px){
+    .booking_overview_section{
+        display: flex;
+        flex-direction: column;
+    }
+    .booking_image{
+        width: 100%;
+        object-fit: cover;
+    }
+    .booking_image img{
+        
+        overflow: hidden;
+    }
+    ul{
+        padding-left: 0px;
+    }
+    .booking_list{
+        padding-top: 20px;
+    }
+}
+@media(max-width : 600px){
+    .booking_view{
+        width: 95%
+    }
+    .booking_overall, .booking_contact, .booking_credit, .booking_confirm{
+        width: 90%;
+    }
+}

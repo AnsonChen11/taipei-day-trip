@@ -56,9 +56,6 @@ main{
     position: absolute;
     right: 15px;
 }
-.previous:hover, .next:hover{
-    background-color: rgba(146, 146, 146, 0.8);
-}
 .dots{
     position: absolute;
 }
@@ -118,6 +115,7 @@ main{
 .date{
     width: 193px;
     height: 35px;
+    cursor: pointer;
 }
 .schedule{
     display: flex;
@@ -126,6 +124,7 @@ main{
     accent-color: #448899;
     width: 22px;
     margin-right: 4px;
+    cursor: pointer;
 }
 .schedule label{
     font-weight: 500;
@@ -150,6 +149,7 @@ main{
 }
 button:hover{
     background-color: #1c758b;
+    cursor: pointer;
 }
 hr{
     max-width: 1150px;
@@ -193,9 +193,6 @@ article{
         padding-top: 20px;
         width: 90%;
     }
-    .previous img{
-        
-    }
     .next img{
         right: 0px;
     }
@@ -204,6 +201,3 @@ article{
         left: 0px
     }
 }
-@media(max-width : 600px){
-
-}  

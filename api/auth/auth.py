@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from modules.token import make_token, decode_token
+from modules.create_jwt import make_token, decode_token
 from flask_bcrypt import Bcrypt
 import time
 from modules import connect_to_db
@@ -57,14 +57,13 @@ def api_user_auth():
 		cur.execute(sql, (data["email"],))
 		query = cur.fetchone()
 		cur.close()
-		# bcrypt = Bcrypt()
-		# passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
 		try:
 			if query:
 				bcrypt = Bcrypt()
 				passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
 				if passwordIsVerified == True:
 					token = make_token(query)
+					print(token)
 					resp = make_response(jsonify({
 						"ok": True
 						}), 200)

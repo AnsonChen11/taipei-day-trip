@@ -84,6 +84,7 @@ button{
 button:hover{
     background-color: #295a66;
     transition: ease-in-out 0.1s;
+    cursor: pointer;
 }
 button img{
     width: auto;
@@ -117,6 +118,7 @@ button img{
 .menu-item:hover{
     background-color: #E8E8E8;
     border-radius: 5px;
+    cursor: pointer;
 }
 main{
     display: grid;
@@ -144,12 +146,17 @@ main{
     height: 197px;
     display: flex;
     justify-content: center;
-    
+    overflow: hidden;
 }
 .spotImage img{
     width: 100%;
     position: relative;
     object-fit: cover;
+    transform: scale(1,1);
+    transition: all .3s ease-out;
+}
+.spotImage img:hover{
+    transform:scale(1.2,1.2);
 }
 .tag{
     width: 270px;

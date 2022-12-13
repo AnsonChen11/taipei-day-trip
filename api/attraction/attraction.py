@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 import math
 from modules import connect_to_db
 from modules.connect_to_db import conn
@@ -15,7 +15,7 @@ def api_attractions():
 	page = int(request.args.get("page"))
 	keyword = request.args.get("keyword")
 	if keyword:
-		c = conn() #連線 connection pool
+		c = conn()
 		cur = c.cursor()
 		sql = "SELECT * FROM attraction WHERE category = %s OR name LIKE '%' %s '%' LIMIT %s,%s" #'%' %s '%'中間要空隔
 		value = (keyword, keyword, (page * 12), 12)
@@ -132,3 +132,4 @@ def api_categories():
 	finally:
 		cur.close()
 		c.close()
+
