@@ -222,6 +222,7 @@ const formPasswordInput = document.getElementById("loginPassword")
 formPasswordInput.addEventListener("click", function(){
     removeErrorMessage()
 })
+
 const signinUsername = document.getElementById("signinUsername")
 signinUsername.addEventListener("click", function(){
     removeErrorMessage()
