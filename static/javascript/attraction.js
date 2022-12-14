@@ -111,3 +111,49 @@ function showSlides(n){
     slideShow[slideIndex-1].style.display = "block";
     dot[slideIndex-1].className += " active";
 }
+
+const btn = document.querySelector(".btn")
+btn.addEventListener("click", function(){
+    if(document.cookie){
+        let attractionId = location.pathname.slice(12,);
+        let date = document.querySelector(".date").value;
+        let time = document.querySelector("input[name='radio']:checked").value;
+        let price = document.querySelector(".price").textContent.slice(4,8);
+        if(attractionId && date && time && price){
+            const url = "/api/booking";
+            const headers = {
+                "Content-Type": "application/json"
+            };
+            let body = {
+                "attractionId": attractionId,
+                "date": date,
+                "time": time,
+                "price": price,
+            };
+            fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.ok){
+                    window.location.replace("/booking")
+                }
+            })
+        }
+        else{
+            const btn = document.querySelector(".btn");
+            const details = document.querySelector(".details");
+            const detailsDiv = document.createElement("div");
+            detailsDiv.className = "loginErrorMessage";
+            detailsDiv.textContent = "請確認欄位皆已填寫！";
+            details.insertBefore(detailsDiv, btn)
+        }
+    }
+    if(!document.cookie){
+        console.log("為登入")
+        overlay.style.display = "block";
+        login.style.display = "block"
+    }
+})

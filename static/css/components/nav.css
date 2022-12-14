@@ -24,6 +24,7 @@ nav a, .container a{
     color: #448899;
     font-size: 30px;
     margin-left: 10px;
+    font-weight: 700;
 }
 .auth_menu{
     display: flex;
