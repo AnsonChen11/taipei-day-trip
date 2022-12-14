@@ -79,6 +79,18 @@ input::-webkit-input-placeholder{
 input{
     padding-left: 10px;
 }
+/* form input:valid{
+    border:2px solid rgb(6, 193, 6);
+}
+form input:invalid{
+    border:2px solid red;
+}
+form input.valid{
+    border:2px solid rgb(6, 193, 6);
+}
+form input.invalid{
+    border:2px solid red;
+} */
 .email, .password, .username{
     box-sizing: border-box;
 }

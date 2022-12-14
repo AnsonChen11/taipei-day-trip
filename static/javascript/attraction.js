@@ -7,6 +7,7 @@ window.onload = async function(){
     .then(data => {
         const slideShow = document.querySelector(".slideShowContainer");
         const dot = document.querySelector(".dots");
+        document.title = "台北一日遊 | " + data.data.name
         for(let i = 0; i < data.data.images.length; i++){
             const slideShowDiv = document.createElement("div");
             slideShowDiv.className = "slideShow fade";
@@ -137,7 +138,7 @@ btn.addEventListener("click", function(){
             })
             .then(response => response.json())
             .then(data => {
-                if(data.ok){
+                if(data){
                     window.location.replace("/booking")
                 }
             })

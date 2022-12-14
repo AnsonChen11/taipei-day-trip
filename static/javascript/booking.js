@@ -1,4 +1,5 @@
 let ttl_price = 0
+document.title = "台北一日遊 | 我的預定"
 fetch("/api/booking")
 .then(response => response.json())
 .then(data => {

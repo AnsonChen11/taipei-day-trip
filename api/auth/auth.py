@@ -63,7 +63,6 @@ def api_user_auth():
 				passwordIsVerified = bcrypt.check_password_hash(query[3], data["password"])
 				if passwordIsVerified == True:
 					token = make_token(query)
-					print(token)
 					resp = make_response(jsonify({
 						"ok": True
 						}), 200)
