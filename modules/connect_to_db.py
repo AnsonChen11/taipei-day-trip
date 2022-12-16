@@ -1,7 +1,9 @@
 import mysql.connector, os
 from mysql.connector import pooling
+from dotenv import load_dotenv
 
 #connection pool
+load_dotenv()
 connection_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name = "taipeitrip_pool",
     pool_size = 5,
