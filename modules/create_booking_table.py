@@ -3,7 +3,7 @@ import json, mysql.connector, re, os
 conn = mysql.connector.connect(
   host = "localhost",
   user = "root",
-  password = "12345678",
+  password = os.getenv("mysql_password"),
   database = "taipeitrip",
   charset = "utf8",
 )

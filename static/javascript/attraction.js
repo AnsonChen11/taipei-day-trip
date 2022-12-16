@@ -19,7 +19,7 @@ window.onload = async function(){
 
             const dotSpan = document.createElement("span");
             dotSpan.className = "dot"
-            dotSpan.setAttribute("id", "dot" + i)
+            dotSpan.setAttribute("dot_id", i)
             dot.appendChild(dotSpan)
         }
         
@@ -56,7 +56,7 @@ window.onload = async function(){
     })  
 }
 
-//Option between morning or afternoon
+/* ------------------Option change price between morning or afternoon--------------------- */
 const morning = document.querySelector(".morning")
 const afternoon = document.querySelector(".afternoon")
 const price = document.querySelector(".price")
@@ -67,7 +67,7 @@ afternoon.addEventListener("click", function(){
     price.textContent = "新台幣 2500 元";
 })
 
-//slide next or previous image function
+/* ------------------click slides to change next or previous image--------------------- */
 const previous = document.querySelector(".previous")
 const next = document.querySelector(".next")
 previous.addEventListener("click", function(){
@@ -80,18 +80,18 @@ function plusSlides(n){
     showSlides(slideIndex += n);
 }
 
-
-
-// // click dot slide image function
-// const dotNumber = document.querySelector("#dot1")
-// console.log(dotNumber)
-// dotNumber.addEventListener("click", function(){
-//     console.log("1")
-//     currentSlide(1);
-// })
-// function currentSlide(n){
-//     showSlides(slideIndex = n);
-// }
+/* ---------------------------click dot to slide image ----------------------------- */
+document.addEventListener("click", function(e){
+    const target = e.target.closest("[dot_id]");
+    if(target){
+        let dotId = parseInt(target.getAttribute('dot_id')) + 1
+        currentSlide(dotId)
+    }
+});
+/* ----------------------function of currentSlide & showSlides------------------------ */
+function currentSlide(n){
+    showSlides(slideIndex = n);
+}
 
 function showSlides(n){
     let i;
@@ -100,7 +100,7 @@ function showSlides(n){
     if(n > slideShow.length){ //若index超過最後一張，回到第一張
         slideIndex = 1;
     }
-    if(n < 1){//若index超過第一張(小於1)，回到最後一張
+    if(n < 1){ //若index超過第一張(小於1)，回到最後一張
         slideIndex = slideShow.length;
     }
     for(i = 0; i < slideShow.length; i++){
@@ -113,6 +113,7 @@ function showSlides(n){
     dot[slideIndex-1].className += " active";
 }
 
+/* ---------------------------click booking button to book ----------------------------- */
 const btn = document.querySelector(".btn")
 btn.addEventListener("click", function(){
     if(document.cookie){
@@ -153,7 +154,6 @@ btn.addEventListener("click", function(){
         }
     }
     if(!document.cookie){
-        console.log("為登入")
         overlay.style.display = "block";
         login.style.display = "block"
     }

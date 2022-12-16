@@ -11,11 +11,11 @@ overlay.addEventListener("click", function(){
     removeErrorMessage()
 })
 
-
 /*------------------------------for auth_booking------------------------------*/
 const auth_booking = document.querySelector(".auth_booking")
 auth_booking.addEventListener("click", function(){
-    if(document.cookie){
+    let userData = sessionStorage.getItem("userData") 
+    if(userData){
         location.href="/booking"
     }
     else{
@@ -24,11 +24,9 @@ auth_booking.addEventListener("click", function(){
     }
 })
 
-
 /*------------------------------for nav bar------------------------------*/
 const auth_login = document.querySelector(".auth_login")
 const auth_logout = document.querySelector(".auth_logout")
-
 
 /*------------------------onload to check user login or not-------------------*/
 fetch("/api/user/auth")
@@ -40,6 +38,11 @@ fetch("/api/user/auth")
     else{
         auth_login.style.display = "none"
         auth_logout.style.display = "block"
+        sessionStorage.setItem("userData", JSON.stringify({
+            "id": data.data.id,
+            "name": data.data.name,
+            "email": data.data.email
+        }));
     }
 })
 
@@ -61,6 +64,7 @@ auth_logout.addEventListener("click", function(){
     .then(data => {
         if(data){
             location.reload()
+            sessionStorage.removeItem("userData")
         }
     })
 })
@@ -80,7 +84,7 @@ closeBtnforsigin.addEventListener("click", function(){
     removeErrorMessage();
 })
 
-/*----------------change to login or change to signin card----------------*/
+/*----------------change to login or signin card----------------*/
 const changeToLogin = document.querySelector(".changeToLogin");
 const changeToSignin = document.querySelector(".changeToSignin");
 changeToLogin.addEventListener("click", function(){
@@ -93,7 +97,7 @@ changeToSignin.addEventListener("click", function(){
     signin.style.display = "block"
 })
 
-/*------------------------Signin submit------------------------*/
+/*-------------------Signin submit and verification--------------------*/
 const submitForSignin = document.querySelector(".submitForSignin");
 submitForSignin.addEventListener("click", function(e){
     e.preventDefault()
@@ -114,13 +118,20 @@ submitForSignin.addEventListener("click", function(e){
         signinCardDiv.textContent = "請確認欄位皆已輸入";
         signinCard.insertBefore(signinCardDiv, changeToLogin);
     }
-    else if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email) === false){
+    else if(checkUsername(body.name) === false){
+        signinCardDiv.className = "loginErrorMessage";
+        signinCardDiv.textContent = "姓名不得輸入特殊符號";
+        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    }
+    else if(checkEmail(body.email) === false){
         signinCardDiv.className = "loginErrorMessage";
         signinCardDiv.textContent = "email格式錯誤";
         signinCard.insertBefore(signinCardDiv, changeToLogin);
-        // const signinEmail = document.getElementById("signinEmail")
-        // signinEmail.style.borderColor = "red"
-        // signinEmail.style.borderWidth = "medium"
+    }
+    else if(checkPassword(body.password) === false){
+        signinCardDiv.className = "loginErrorMessage";
+        signinCardDiv.textContent = "密碼格式錯誤";
+        signinCard.insertBefore(signinCardDiv, changeToLogin);
     }
     else{
         fetch(url, {
@@ -130,30 +141,26 @@ submitForSignin.addEventListener("click", function(e){
         })
         .then(response => response.json())
         .then(data => {
-            if(data){
+            if(data.ok){
                 signinCardDiv.className = "loginSuccessfulMessage";
                 signinCardDiv.textContent = "註冊成功，請登入系統";
                 signinCard.insertBefore(signinCardDiv, changeToLogin);
                 location.reload()
             }
-            else{
+            if(data.message == "輸入的email格式不正確"){
+                signinCardDiv.className = "loginErrorMessage";
+                signinCardDiv.textContent = "註冊失敗，輸入的email格式不正確";
+                signinCard.insertBefore(signinCardDiv, changeToLogin);
+            }
+            if(data.message == "該email已被註冊"){
                 signinCardDiv.className = "loginErrorMessage";
                 signinCardDiv.textContent = "註冊失敗，電子信箱已被註冊";
                 signinCard.insertBefore(signinCardDiv, changeToLogin);
-                signin.addEventListener("click", function(){
-                    signinCardDiv.style.display = "none"
-                });
-                closeBtnforsigin.addEventListener("click", function(){
-                    document.getElementById("signinForm").reset();
-                });
-                overlay.addEventListener("click", function(){
-                    document.getElementById("signinForm").reset();
-                })
             }
         })
     }
 })
-/*------------------------Login submit------------------------*/
+/*------------------Login submit and verification--------------------*/
 const submitForLogin = document.querySelector(".submitForLogin")
 submitForLogin.addEventListener("click", function(e){
     e.preventDefault();
@@ -173,13 +180,15 @@ submitForLogin.addEventListener("click", function(e){
         loginCardDiv.textContent = "請確認欄位皆已輸入";
         loginCard.insertBefore(loginCardDiv, changeToSignin);
     }
-    else if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(body.email) === false){
+    else if(checkEmail(body.email) === false){
         loginCardDiv.className = "loginErrorMessage";
         loginCardDiv.textContent = "email格式錯誤";
         loginCard.insertBefore(loginCardDiv, changeToSignin);
-        // const loginEmail = document.getElementById("loginEmail")
-        // loginEmail.style.borderColor = "red"
-        // loginEmail.style.borderWidth = "medium"
+    }
+    else if(checkPassword(body.password) === false){
+        loginCardDiv.className = "loginErrorMessage";
+        loginCardDiv.textContent = "密碼格式錯誤";
+        loginCard.insertBefore(loginCardDiv, changeToSignin);
     }
     else{
         fetch(url, {
@@ -199,15 +208,6 @@ submitForLogin.addEventListener("click", function(e){
                 loginCardDiv.className = "loginErrorMessage";
                 loginCardDiv.textContent = "登入失敗，電子信箱或密碼輸入錯誤";
                 loginCard.insertBefore(loginCardDiv, changeToSignin);
-                login.addEventListener("click", function(){
-                    loginCardDiv.style.display = "none";
-                });
-                closeBtnforlogin.addEventListener("click", function(){
-                    document.getElementById("loginForm").reset();
-                });
-                overlay.addEventListener("click", function(){
-                    document.getElementById("loginForm").reset();
-                });
             }
         })
     }
@@ -244,18 +244,31 @@ function removeErrorMessage(){
     }
 }
 
+/*--------------------function of Rex email--------------------*/
+function checkEmail(email){
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!regex.test(email)){
+      return false;
+    }
+    return true;
+}
 
-
-// const inputs = document.querySelectorAll("input")
-// inputs.forEach(input => {
-//     input.addEventListener("input", function(){
-//         if(input.checkValidity()){
-//             input.classList.add("valid")
-//             input.classList.remove("invalid")
-//         }
-//         else{
-//             input.classList.remove("valid")
-//             input.classList.add("invalid")
-//         }
-//     })
-// })
+/*--------------------function of Rex Password--------------------*/
+function checkPassword(password){
+    const regex = /^[a-zA-Z0-9_]+$/;
+    if (!regex.test(password)){
+      return false;
+    }
+    if (password.length < 6 || password.length > 20){
+      return false;
+    }
+    return true;
+}
+/*--------------------function of Rex username--------------------*/
+function checkUsername(username){
+    const regex = /^[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFFa-zA-Z0-9]+$/;
+    if (!regex.test(username)){
+      return false;
+    }
+    return true;
+}

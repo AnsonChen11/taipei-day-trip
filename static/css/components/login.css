@@ -112,3 +112,8 @@ form input.invalid{
     color: #1da56c;
     font-weight: 500;
 }
+.form span{
+    font-size: 10px;
+    font-weight: 300;
+    padding-bottom: 10px;
+}

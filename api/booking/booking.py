@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for, jsonify
 from modules import connect_to_db
-from modules.create_jwt import make_token, decode_token
+from modules.create_jwt import decode_token
 from modules.connect_to_db import conn
 
 booking = Blueprint(
@@ -22,7 +22,7 @@ def api_booking():
             try:
                 decodeToken = decode_token(cookiesToken)
                 c = conn()
-                cur = c.cursor()
+                cur = c.cursor(dictionary=True)
                 sql = '''
                 SELECT 
                     user.name,
@@ -56,15 +56,15 @@ def api_booking():
                     while i < len(query):
                         result = {
                             "attraction": {
-                            "id": query[i][2],
-                            "name": query[i][3],
-                            "address": query[i][4],
-                            "image": eval(query[i][5])[0]
+                            "id": query[i]["id"],
+                            "name": query[i]["name"],
+                            "address": query[i]["address"],
+                            "image": eval(query[i]["images"])[0]
                             },
-                        "date": query[i][6],
-                        "time": query[i][7],
-                        "price": query[i][8],
-                        "booking_id": query[i][9]
+                        "date": query[i]["date"],
+                        "time": query[i]["time"],
+                        "price": query[i]["price"],
+                        "booking_id": query[i]["booking_id"]
                         } 
                         list.append(result)
                         i = i + 1
@@ -97,7 +97,16 @@ def api_booking():
                         }), 403
             else:
                 cur = c.cursor()
-                sql = "INSERT INTO booking (user_id, attractionId, date, time, price) VALUES (%s, %s, %s, %s, %s)"
+                sql = '''
+                INSERT INTO 
+                    booking (
+                        user_id, 
+                        attractionId, 
+                        date, 
+                        time, 
+                        price
+                        ) 
+                    VALUES (%s, %s, %s, %s, %s)'''
                 cur.execute(sql, (decodeToken["id"], data["attractionId"], data["date"], data["time"], data["price"],))
                 c.commit()
                 cur.close()

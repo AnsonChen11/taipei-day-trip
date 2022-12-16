@@ -8,7 +8,7 @@ connection_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_reset_session = True,
     host = "localhost",
 	user = "root",
-	password = "12345678",
+	password = os.getenv("mysql_password"),
 	database = "taipeitrip",
 	charset = "utf8",
 )
