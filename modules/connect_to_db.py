@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector, os
 from mysql.connector import pooling
 
 #connection pool
