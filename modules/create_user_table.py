@@ -1,6 +1,7 @@
 import json, mysql.connector, re, os
 from dotenv import load_dotenv
 
+load_dotenv()
 conn = mysql.connector.connect(
   host = "localhost",
   user = "root",
