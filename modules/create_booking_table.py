@@ -12,7 +12,8 @@ conn = mysql.connector.connect(
 
 def create_table_booking():
   cur = conn.cursor(buffered=True)
-  sql_create_table_booking = '''CREATE TABLE booking(
+  sql_create_table_booking = '''
+  CREATE TABLE booking(
       booking_id BIGINT PRIMARY KEY AUTO_INCREMENT, 
       user_id BIGINT NOT NULL,
       attractionId BIGINT NOT NULL, 
@@ -30,7 +31,11 @@ def create_table_booking():
 
 def insert_table_booking():
   cur = conn.cursor(buffered=True)
-  sql_insert_table_booking = "INSERT INTO booking(user_id, attractionId, date, time, price) values(13, 1, '2022-12-31', 'afternoon', 2500)"
+  sql_insert_table_booking = '''
+  INSERT INTO 
+  booking(user_id, attractionId, date, time, price) 
+  values(13, 1, '2022-12-31', 'afternoon', 2500)
+  '''
   cur.execute(sql_insert_table_booking) 
   print("Insert value booking Successfully")
   conn.commit()

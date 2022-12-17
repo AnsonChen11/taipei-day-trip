@@ -19,12 +19,12 @@ def get_booking_data():
                 user.email,
                 attraction.id, 
                 attraction.name, 
-                attraction.address, 
-                attraction.images, 
+                attraction.address,  
                 booking.date, 
                 booking.time, 
                 booking.price,
-                booking.booking_id
+                booking.booking_id,
+                attractionimages.images
             FROM 
                 booking 
             INNER JOIN 
@@ -35,8 +35,13 @@ def get_booking_data():
                 user 
             ON 
                 booking.user_id = user.id
+            INNER JOIN
+                attractionimages
+            ON
+                booking.attractionId = attractionimages.image_id
             WHERE
                 user.id = %s
+            GROUP BY attraction.id
             '''
             cur.execute(sql,(decodeToken["id"],))
             query = cur.fetchall()
@@ -49,7 +54,7 @@ def get_booking_data():
                         "id": query[i]["id"],
                         "name": query[i]["name"],
                         "address": query[i]["address"],
-                        "image": eval(query[i]["images"])[0]
+                        "image": query[i]["images"]
                         },
                     "date": query[i]["date"],
                     "time": query[i]["time"],
