@@ -81,18 +81,19 @@ DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
-  `booking_id` bigint NOT NULL AUTO_INCREMENT,
+  `booking_id` int NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
   `attractionId` bigint NOT NULL,
   `date` varchar(255) DEFAULT NULL,
   `time` varchar(255) NOT NULL,
   `price` bigint NOT NULL,
+  `order_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`booking_id`),
   KEY `user_id` (`user_id`),
   KEY `attractionId` (`attractionId`),
   CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`attractionId`) REFERENCES `attraction` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,8 +102,71 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (18,18,3,'2022-12-17','afternoon',2500),(39,14,1,'2022-12-23','morning',2000),(43,14,2,'2022-12-21','morning',2000),(44,14,9,'2022-12-21','morning',2000);
+INSERT INTO `booking` VALUES (13,13,9,'2022-12-24','afternoon',2500,'20221223540937'),(14,13,21,'2022-12-27','morning',2000,'20221223354933'),(16,14,6,'2022-12-23','afternoon',2500,'20221223540937'),(17,14,9,'2022-12-31','morning',2000,'20221223540937'),(18,14,15,'2022-12-26','morning',2000,'20221223540937'),(19,14,6,'2022-12-24','morning',2000,NULL);
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(255) DEFAULT NULL,
+  `order_price` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `contact_name` varchar(255) NOT NULL,
+  `contact_email` varchar(255) NOT NULL,
+  `contact_phone` varchar(255) NOT NULL,
+  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_number` (`order_number`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (279,'20221223821068',6000,13,'Selina','selina@gmail.com','0912345678','2022-12-23 02:04:18'),(280,'20221223354933',4500,13,'Selina','selina@gmail.com','0912345678','2022-12-23 12:18:05'),(281,'20221223540937',6500,14,'Pyton','python@yahoo.com','0912345678','2022-12-23 16:51:45');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `order_number` varchar(255) NOT NULL,
+  `payment_status` int NOT NULL,
+  `msg` varchar(255) DEFAULT NULL,
+  `payment_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `transaction_time_millis` varchar(255) DEFAULT NULL,
+  `bank_transaction_id` varchar(255) DEFAULT NULL,
+  `rec_trade_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`order_number`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_number`) REFERENCES `orders` (`order_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES ('20221223354933',0,'Success','2022-12-23 12:18:06','1671769086211','TP20221223T8f7Gi','D20221223T8f7Gi'),('20221223540937',0,'Success','2022-12-23 16:51:46','1671785506272','TP20221223trYgAH','D20221223trYgAH'),('20221223821068',0,'Success','2022-12-23 02:04:19','1671732258946','TP20221223yzqxtz','D20221223yzqxtz');
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -141,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-18  1:33:36
+-- Dump completed on 2022-12-23 17:04:46
