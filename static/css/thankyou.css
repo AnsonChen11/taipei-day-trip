@@ -1,0 +1,103 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    padding-top: 54px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #666666;
+}
+main{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.noOrderItem{
+    color: rgb(250, 114, 114);
+    font-weight: 500;
+}
+hr{
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+li{
+    list-style-type: none;
+}
+.thankyou_view{
+    width: 1150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.thankyou_overall{
+    width: 980px;
+}
+.thankyou_subtitle{
+    padding-bottom: 20px;
+    font-weight: 700;
+    font-size: 19px;
+}
+.thankyou_overview_section{
+   display: flex;
+   padding-top: 20px;
+}
+.thankyou_list ul{
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+.thankyou_attraction{
+    color: #448899;
+    font-weight: 700;
+}
+.thankyou_list_item{
+    font-weight: 700;
+}
+.thankyou_image{
+    width: 266px;
+}
+.thankyou_image img{
+    width: 100%;
+    object-fit: cover
+}
+@media(max-width : 1200px){
+    .thankyou_view{
+        width: 90%
+    }
+    .thankyou_overall{
+        width: 80%;
+    }
+}
+@media(max-width : 900px){
+    .thankyou_overview_section{
+        display: flex;
+        flex-direction: column;
+    }
+    .thankyou_image{
+        width: 100%;
+        object-fit: cover;
+    }
+    .thankyou_image img{
+        
+        overflow: hidden;
+    }
+    ul{
+        padding-left: 0px;
+    }
+    .thankyou_list{
+        padding-top: 20px;
+    }
+}
+@media(max-width : 600px){
+    .thankyou_view{
+        width: 95%
+    }
+    .thankyou_overall{
+        width: 90%;
+    }
+}

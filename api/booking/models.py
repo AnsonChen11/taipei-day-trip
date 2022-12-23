@@ -41,6 +41,8 @@ def get_booking_data():
                 booking.attractionId = attractionimages.image_id
             WHERE
                 user.id = %s
+            AND
+                order_number IS NULL
             GROUP BY attraction.id, booking.date
             '''
             cur.execute(sql,(decodeToken["id"],))

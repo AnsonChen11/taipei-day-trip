@@ -3,6 +3,7 @@ from api.attraction.attraction import attraction
 from api.auth.auth import auth
 from api.booking.booking import booking
 from api.thankyou.thankyou import thankyou
+from api.orders.orders import orders
 
 app=Flask(__name__)
 
@@ -15,6 +16,7 @@ app.register_blueprint(attraction)
 app.register_blueprint(auth)
 app.register_blueprint(booking)
 app.register_blueprint(thankyou)
+app.register_blueprint(orders)
 
 # Pages
 @app.route("/")

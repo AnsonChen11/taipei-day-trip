@@ -70,15 +70,30 @@ li{
     margin-left: auto;
     cursor: pointer;
 }
-.booking_contact input, .booking_credit input{
+.booking_contact input, .tpfield{
     width: 200px;
     height: 38px;
     border: 1px solid #E8E8E8;
     border-radius: 5px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+.booking_contact_name, .booking_contact_email, .booking_contact_phone{
     margin-bottom: 15px;
+}
+.tappay-field-focus, .booking_contact input:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
 }
 .booking_hint{
     font-weight: 700;
+}
+.booking_item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
 }
 .booking_confirm{
     font-weight: 700;

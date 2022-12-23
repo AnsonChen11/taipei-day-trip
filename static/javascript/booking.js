@@ -23,6 +23,7 @@ function fetchApiBooking(){
         }
         else{
             createElementForBooking(data)
+            getBookingData(data)
         }
     })
 }
@@ -133,7 +134,6 @@ document.addEventListener("click", function(e){
 
 /* ---------------------------delete_booking function----------------------------- */
 function delete_booking(bookingId){
-    console.log(bookingId)
     const url = "/api/booking"
     const headers = {
         "Content-Type": "application/json"
@@ -164,3 +164,135 @@ booking_contact_name.value = userData.name;
 
 const booking_contact_email = document.getElementById("booking_contact_email");
 booking_contact_email.value = userData.email;
+
+/* ---------------------------------Connect Cash Flow with TapPay-------------------- */
+const APP_ID = 126926
+const APP_KEY = "app_qMdNyqhTAkEsseMgGTa1oQXbf4tzRoxRXJAqnfdnYEKRSjKtOUai0IkoZhj3"
+TPDirect.setupSDK(APP_ID, APP_KEY, 'sandbox')
+
+let fields = {
+    number: {
+        element: '#card-number',
+        placeholder: "**** **** **** ****"
+    },
+    expirationDate: {
+        element: document.getElementById('card-expiration-date'),
+        placeholder: "MM / YY"
+    },
+    ccv: {
+        element: '#card-ccv',
+        placeholder: "ccv"
+    }
+}
+TPDirect.card.setup({
+    fields: fields,
+    styles: {
+        'input': {
+            'color': 'gray'
+        },
+        'input.card-number': {
+            'font-size': '16px'
+        },
+        'input.ccv': {
+            'font-size': '16px'
+        },
+        'input.expiration-date': {
+            'font-size': '16px'
+        },
+        '.valid': {
+            'color': 'green'
+        },
+        '.invalid': {
+            'color': 'red'
+        },
+    },
+    isMaskCreditCardNumber: true,
+    maskCreditCardNumberRange: {
+        beginIndex: 4,
+        endIndex: 11
+    }
+})
+
+
+/* ---------------------------------confirm and payment-------------------- */
+function getBookingData(bookingData){
+    const orderAndPay = document.querySelector(".orderAndPay")
+    orderAndPay.addEventListener("click", function(event){
+        event.preventDefault()
+        let contactName = document.querySelector("#booking_contact_name").value
+        let contactEmail = document.querySelector("#booking_contact_email").value
+        let contactPhoneNumber = document.querySelector("#booking_contact_phone").value
+
+        if(contactName == "" | contactEmail == "" | contactPhoneNumber == ""){
+            alert("請輸入所有欄位")
+            return
+        }
+        const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+        if (tappayStatus.canGetPrime === false){
+            alert("請輸入正確信用卡資訊")
+            return
+        }
+        TPDirect.card.getPrime((result) => {
+            if (result.status !== 0) {
+                alert("發生錯誤：" + result.msg)
+                return
+            }
+
+            let prime = result.card.prime
+            let trip = []
+            let totalPrice = 0
+            for(let i = 0; i < bookingData.data.length; i++){
+                let att = {
+                    "attraction": {
+                        "id": bookingData.data[i].attraction.id,
+                        "name": bookingData.data[i].attraction.name,
+                        "address": bookingData.data[i].attraction.address,
+                        "image": bookingData.data[i].attraction.image
+                      },
+                      "date": bookingData.data[i].date,
+                      "time": bookingData.data[i].time
+                }
+                trip.push(att)
+                totalPrice += bookingData.data[i].price
+            }
+
+            const url = "/api/orders";
+            const headers = {
+                "Content-Type": "application/json"
+            };
+            let body = {
+                "prime": prime,
+                "order": {
+                    "price": totalPrice,
+                    "trip": trip
+                },
+                "contact":{
+                    "name": contactName,
+                    "email": contactEmail,
+                    "phone": contactPhoneNumber
+                }
+            }
+
+            fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if(data.data.payment.message == "付款成功"){
+                    window.location.href = "/thankyou?number=" + data.data.number
+                }
+                else{
+                    const booking_confirm = document.querySelector(".booking_confirm");
+                    const details = document.querySelector(".details");
+                    const detailsDiv = document.createElement("div");
+                    detailsDiv.className = "loginErrorMessage";
+                    detailsDiv.textContent = "付款失敗，請稍後再試或洽發卡銀行機構";
+                    details.insertBefore(detailsDiv, booking_confirm)
+                }
+            })
+        })  
+    })
+}

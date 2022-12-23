@@ -4,6 +4,7 @@
     {% include "components/head.html" %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/booking.css') }}">
     <script src="{{ url_for('static', filename='/javascript/booking.js')}}" defer></script>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
 </head>
 <body>
     {% include "components/nav.html" %}
@@ -16,29 +17,32 @@
             <article class="booking_contact">
                 <div>
                     <div class="booking_subtitle">您的聯絡資訊</div>
-                    <li label for="booking_contact_name">聯絡姓名：</label>
+                    <li label for="booking_contact_name" class="booking_contact_name">聯絡姓名：</label>
                     <input type="text" name="booking_contact_name" id="booking_contact_name">
-                    <li label for="booking_contact_email">連絡信箱：</label>
+                    <li label for="booking_contact_email" class="booking_contact_email">連絡信箱：</label>
                     <input type="text" name="booking_contact_email" id="booking_contact_email">
-                    <li label for="booking_contact_phone">手機號碼：</label>
-                    <input type="text" name="booking_contact_phone" id="booking_contact_phone">
+                    <li label for="booking_contact_phone" class="booking_contact_phone">手機號碼：</label>
+                    <input type="text" name="booking_contact_phone" id="booking_contact_phone" maxlength="10">
                     <li class="booking_hint">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</li>
                 </div>
             </article><hr>
             <article class="booking_credit">
-                <div>
+                <div class="payment">
                     <div class="booking_subtitle">信用卡付款資訊</div>
-                    <li label for="booking_credit_number">卡片號碼：</label>
-                    <input type="text" name="booking_credit_number" id="booking_credit_number" placeholder="**** **** **** ****">
-                    <li label for="booking_contact_name">過期時間：</label>
-                    <input type="text" name="booking_credit_exp" id="booking_credit_exp" placeholder="MM / YY">
-                    <li label for="booking_contact_name">驗證密碼：</label>
-                    <input type="text" name="booking_credit_password" id="booking_credit_password" placeholder="CVV">
+                    <div class="booking_item">卡片號碼：
+                        <div class="tpfield" id="card-number"></div>
+                    </div>
+                    <div class="booking_item">過期時間：
+                        <div class="tpfield" id="card-expiration-date"></div>
+                    </div>   
+                    <div class="booking_item">驗證密碼：
+                        <div class="tpfield" id="card-ccv"></div>
+                    </div>
                 </div>
             </article><hr>
             <article class="booking_confirm">
                 <span class="booking_ttl_price">總價：新台幣 2000 元</span>
-                <div><button>確認訂購並付款</button></div>
+                <div><button class="orderAndPay">確認訂購並付款</button></div>
             </article>
         </div>
     </main>
