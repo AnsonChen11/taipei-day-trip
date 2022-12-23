@@ -158,3 +158,10 @@ btn.addEventListener("click", function(){
         login.style.display = "block"
     }
 })
+
+/* ---------------------------date can't choose before now----------------------------- */
+const date = document.querySelector('.date');
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+date.min = tomorrow.toISOString().split('T')[0];

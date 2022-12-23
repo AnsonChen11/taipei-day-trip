@@ -34,6 +34,13 @@ nav a, .container a{
     color: #666666;
     cursor: pointer;
 }
+.auth_booking, .auth_login, .auth_logout{
+    padding: 10px;
+    border-radius: 5px;
+}
+.auth_booking:hover, .auth_login:hover, .auth_logout:hover{
+    background-color: #c7c7c76b;
+}
 .auth_logout{
     display: none;
 }
