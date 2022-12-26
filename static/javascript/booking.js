@@ -224,12 +224,20 @@ function getBookingData(bookingData){
         let contactPhoneNumber = document.querySelector("#booking_contact_phone").value
 
         if(contactName == "" | contactEmail == "" | contactPhoneNumber == ""){
-            alert("請輸入所有欄位")
+            const booking_contact_phone = document.querySelector(".booking_contact_phone")
+            const ErrorMessage = document.createElement("div")
+            ErrorMessage.className = "errorMessage"
+            ErrorMessage.textContent = "請確認欄位皆已輸入"
+            booking_contact_phone.appendChild(ErrorMessage)
             return
         }
         const tappayStatus = TPDirect.card.getTappayFieldsStatus()
         if (tappayStatus.canGetPrime === false){
-            alert("請輸入正確信用卡資訊")
+            const payment = document.querySelector(".payment")
+            const ErrorMessage = document.createElement("div")
+            ErrorMessage.className = "errorMessage"
+            ErrorMessage.textContent = "信用卡資訊錯誤，或是請洽發卡銀行機構"
+            payment.appendChild(ErrorMessage)
             return
         }
         TPDirect.card.getPrime((result) => {
@@ -288,11 +296,41 @@ function getBookingData(bookingData){
                     const booking_confirm = document.querySelector(".booking_confirm");
                     const details = document.querySelector(".details");
                     const detailsDiv = document.createElement("div");
-                    detailsDiv.className = "loginErrorMessage";
+                    detailsDiv.className = "errorMessage";
                     detailsDiv.textContent = "付款失敗，請稍後再試或洽發卡銀行機構";
                     details.insertBefore(detailsDiv, booking_confirm)
                 }
             })
         })  
     })
+}
+
+
+/*--------------------input addEventListener of remove error message--------------------*/
+const bookingContactNameInput = document.getElementById("booking_contact_name")
+bookingContactNameInput.addEventListener("click", function(){
+    removeErrorMessage()
+})
+const bookingContactEmailInput = document.getElementById("booking_contact_email")
+bookingContactEmailInput.addEventListener("click", function(){
+    removeErrorMessage()
+})
+
+const bookingContactPhoneInput = document.getElementById("booking_contact_phone")
+bookingContactPhoneInput.addEventListener("click", function(){
+    removeErrorMessage()
+})
+
+const orderAndPay = document.querySelector(".orderAndPay")
+orderAndPay.addEventListener("click", function(){
+    removeErrorMessage()
+})
+
+
+/*--------------------function of remove error message--------------------*/
+function removeErrorMessage(){
+    const errorMessage = document.querySelector(".errorMessage")
+    if(errorMessage){
+        errorMessage.remove()
+    }
 }

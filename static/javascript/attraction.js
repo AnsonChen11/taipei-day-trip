@@ -159,7 +159,7 @@ btn.addEventListener("click", function(){
     }
 })
 
-/* ---------------------------date can't choose before now----------------------------- */
+/* ---------------------------datepicker only allow tomorrow onwards----------------------------- */
 const date = document.querySelector('.date');
 
 const tomorrow = new Date();

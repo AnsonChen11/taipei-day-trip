@@ -104,7 +104,7 @@ form input.invalid{
 .hint{
     cursor: pointer;
 }
-.loginErrorMessage{
+.loginErrorMessage, ErrorMessage{
     color: rgb(250, 114, 114);
     font-weight: 500;
 }

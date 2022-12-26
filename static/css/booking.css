@@ -114,6 +114,11 @@ li{
     background-color: #1c758b;
     cursor: pointer;
 }
+.errorMessage{
+    color: rgb(250, 114, 114);
+    font-weight: 500;
+    padding-top: 10px;
+}
 @media(max-width : 1200px){
     .booking_view{
         width: 90%

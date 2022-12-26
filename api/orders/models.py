@@ -3,7 +3,8 @@ from modules import connect_to_db
 from modules.connect_to_db import conn
 from modules.create_jwt import decode_token
 from datetime import datetime
-import requests, json, datetime, random
+import requests, json, datetime, random, os
+from dotenv import load_dotenv
 
 #------------Generate Order Number Randomly-------------
 def generate_order_number(current_date):
@@ -108,8 +109,9 @@ def post_orders_data():
 
 #------------Send Request to TapPay-------------
 def pay_by_prime_to_TapPay(data):
+    load_dotenv()
+    partner_key = os.getenv("tapPay_partner_key")
     url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-    partner_key = "partner_24UMeDJIJX5vbwkKPMfHxxYAvBASmkNNombRZjDbIipM2ThLWeJc8uvX"
     pay_by_prime  = {
         "prime": data["prime"],
         "partner_key": partner_key,
