@@ -153,7 +153,7 @@ function delete_booking(bookingId){
         }
     })
 }
-    
+
 /* ---------------------------------Automate User Data Imports-------------------- */
 let userData = JSON.parse(sessionStorage.getItem("userData"))
 const booking_subtitle = document.querySelector(".booking_subtitle");
@@ -164,6 +164,7 @@ booking_contact_name.value = userData.name;
 
 const booking_contact_email = document.getElementById("booking_contact_email");
 booking_contact_email.value = userData.email;
+
 
 /* ---------------------------------Connect Cash Flow with TapPay-------------------- */
 const APP_ID = 126926
@@ -224,13 +225,23 @@ function getBookingData(bookingData){
         let contactPhoneNumber = document.querySelector("#booking_contact_phone").value
 
         if(contactName == "" | contactEmail == "" | contactPhoneNumber == ""){
-            const booking_contact_phone = document.querySelector(".booking_contact_phone")
-            const ErrorMessage = document.createElement("div")
-            ErrorMessage.className = "errorMessage"
-            ErrorMessage.textContent = "請確認欄位皆已輸入"
-            booking_contact_phone.appendChild(ErrorMessage)
+            createErrorMessage("請確認欄位皆已填寫")
             return
         }
+
+        if(checkUsername(contactName) === false){
+            createErrorMessage("姓名不得輸入特殊符號")
+            return
+        }
+        if(checkEmail(contactEmail) === false){
+            createErrorMessage("email格式錯誤")
+            return
+        }
+        if(checkPhoneNumber(contactPhoneNumber) === false){
+            createErrorMessage("手機號碼格式需為09開頭共10碼數字")
+            return
+        }
+
         const tappayStatus = TPDirect.card.getTappayFieldsStatus()
         if (tappayStatus.canGetPrime === false){
             const payment = document.querySelector(".payment")
@@ -327,10 +338,48 @@ orderAndPay.addEventListener("click", function(){
 })
 
 
+
+/*--------------------function of create error message--------------------*/
+function createErrorMessage(errorMessage){
+    const booking_contact_phone = document.querySelector(".booking_contact_phone")
+    const ErrorMessageDiv = document.createElement("div")
+    ErrorMessageDiv.className = "errorMessage"
+    ErrorMessageDiv.textContent = errorMessage
+    booking_contact_phone.appendChild(ErrorMessageDiv)
+}
+
+
 /*--------------------function of remove error message--------------------*/
 function removeErrorMessage(){
     const errorMessage = document.querySelector(".errorMessage")
     if(errorMessage){
         errorMessage.remove()
     }
+}
+
+/*--------------------function of Rex email--------------------*/
+function checkEmail(contactEmail){
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!regex.test(contactEmail)){
+      return false;
+    }
+    return true;
+}
+
+/*--------------------function of Rex username--------------------*/
+function checkUsername(contactName){
+    const regex = /^[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFFa-zA-Z0-9]+$/;
+    if (!regex.test(contactName)){
+      return false;
+    }
+    return true;
+}
+
+/*--------------------function of Rex phoneNumber--------------------*/
+function checkPhoneNumber(contactPhoneNumber){
+    const regex = /^09\d{8}$/;
+    if (!regex.test(contactPhoneNumber)){
+      return false;
+    }
+    return true;
 }

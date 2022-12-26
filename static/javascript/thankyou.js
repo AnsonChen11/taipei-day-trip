@@ -11,18 +11,6 @@ function fetchOrderNumberAPI(){
         if(data.message == "未登入系統"){
             location.href="/";
         }
-        // if(data.data === null){
-        //     const main = document.querySelector("main");
-        //     const thankyou_view = document.querySelector(".thankyou_view");
-        //     main.removeChild(thankyou_view);
-        //     const thankyou_subtitle = document.createElement("div");
-        //     thankyou_subtitle.className = "thankyou_subtitle";
-        //     thankyou_subtitle.textContent = "您好，訂單編號：" +  + "不存在";
-        //     const noOrderDiv = document.createElement("div");
-        //     noOrderDiv.className = "noOrderItem";
-        //     noOrderDiv.textContent = "目前無任何預定";
-        //     main.append(thankyou_subtitle, noOrderDiv);
-        // }
         else{
             createElementForThankyou(data)
         }

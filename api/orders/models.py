@@ -3,7 +3,7 @@ from modules import connect_to_db
 from modules.connect_to_db import conn
 from modules.create_jwt import decode_token
 from datetime import datetime
-import requests, json, datetime, random, os
+import requests, json, datetime, random, os, re
 from dotenv import load_dotenv
 
 #------------Generate Order Number Randomly-------------
@@ -18,92 +18,100 @@ def post_orders_data():
     if cookiesToken == None:
         return False
 
-    else:
-        try:
-            data = request.get_json()
-            cookiesToken = request.cookies.get("token")
-            decodeToken = decode_token(cookiesToken)
-            order_number = generate_order_number(current_date)
-            order_price = data["order"]["price"]
-            user_id = decodeToken["id"]
-            contact_name = data["contact"]["name"]
-            contact_email = data["contact"]["email"]
-            contact_phone = data["contact"]["phone"]
-            if order_number == "" or contact_name == "" or contact_email == "" or contact_phone == "" :
-                return "建立失敗"
+    try:
+        data = request.get_json()
+        cookiesToken = request.cookies.get("token")
+        decodeToken = decode_token(cookiesToken)
+        order_number = generate_order_number(current_date)
+        order_price = data["order"]["price"]
+        user_id = decodeToken["id"]
+        contact_name = data["contact"]["name"]
+        contact_email = data["contact"]["email"]
+        contact_phone = data["contact"]["phone"]
+        if order_number == "" or contact_name == "" or contact_email == "" or contact_phone == "" :
+            return "欄位有空"
 
-            c = conn()
-            cur = c.cursor(dictionary=True)
-            orders_sql = '''
+        if check_contact_name(contact_name) == False:
+            return "姓名格式錯誤"
+
+        if check_contact_email(contact_email) == False: 
+            return "email格式錯誤"
+
+        if check_contact_phone(contact_phone) == False: 
+            return "電話號碼格式錯誤"
+
+        c = conn()
+        cur = c.cursor(dictionary=True)
+        orders_sql = '''
+        INSERT INTO 
+            orders(
+                order_number,
+                order_price,
+                user_id,
+                contact_name,
+                contact_email,
+                contact_phone
+            )
+        VALUES(%s, %s, %s, %s, %s, %s)
+        '''
+        payment_sql = '''
             INSERT INTO 
-                orders(
-                    order_number,
-                    order_price,
-                    user_id,
-                    contact_name,
-                    contact_email,
-                    contact_phone
-                )
-            VALUES(%s, %s, %s, %s, %s, %s)
-            '''
-            payment_sql = '''
-                INSERT INTO 
-                payment(
-                    order_number,
-                    payment_status
-                )
-            VALUES(%s, %s)
-            '''
-            orders_values = (
-                order_number, 
-                order_price, 
-                user_id, 
-                contact_name, 
-                contact_email, 
-                contact_phone,
-                )
+            payment(
+                order_number,
+                payment_status
+            )
+        VALUES(%s, %s)
+        '''
+        orders_values = (
+            order_number, 
+            order_price, 
+            user_id, 
+            contact_name, 
+            contact_email, 
+            contact_phone,
+            )
 
-            attraction_list = data["order"]["trip"]
-            attraction_ids = []
-            for attraction in attraction_list:
-                attraction_id = attraction["attraction"]["id"]
-                attraction_ids.append(attraction_id)
+        attraction_list = data["order"]["trip"]
+        attraction_ids = []
+        for attraction in attraction_list:
+            attraction_id = attraction["attraction"]["id"]
+            attraction_ids.append(attraction_id)
 
-            booking_id_str = ', '.join(['%s'] * len(attraction_ids))
-            update_order_number_to_booking_sql = '''
-                UPDATE 
-                    booking  
-                SET  
-                    order_number = %s
-                WHERE 
-                    attractionId IN ({})
-            '''.format(booking_id_str)
+        booking_id_str = ', '.join(['%s'] * len(attraction_ids))
+        update_order_number_to_booking_sql = '''
+            UPDATE 
+                booking  
+            SET  
+                order_number = %s
+            WHERE 
+                attractionId IN ({})
+        '''.format(booking_id_str)
 
-            cur.execute(orders_sql, orders_values)
-            cur.execute(payment_sql, (order_number, 1))
-            cur.execute(update_order_number_to_booking_sql, (order_number, *attraction_ids))
-            c.commit()
-            cur.close()
+        cur.execute(orders_sql, orders_values)
+        cur.execute(payment_sql, (order_number, 1))
+        cur.execute(update_order_number_to_booking_sql, (order_number, *attraction_ids))
+        c.commit()
+        cur.close()
 
-            payment_result = pay_by_prime_to_TapPay(data)
+        payment_result = pay_by_prime_to_TapPay(data)
 
-            if payment_result["status"] == 0:
-                update_payment_result = update_payment_details(order_number, payment_result)
+        if payment_result["status"] == 0:
+            update_payment_result = update_payment_details(order_number, payment_result)
 
-                if update_payment_result == True:
-                    return (True, order_number)
-
-                else:
-                    return ("付款失敗", order_number)
+            if update_payment_result == True:
+                return (True, order_number)
 
             else:
                 return ("付款失敗", order_number)
 
-        except:
-            return "內部伺服器錯誤"
+        else:
+            return ("付款失敗", order_number)
 
-        finally:
-            c.close()
+    except:
+        return "內部伺服器錯誤"
+
+    finally:
+        c.close()
 
 
 
@@ -268,3 +276,29 @@ def get_orderNumber_details(orderNumber):
             c.close()
             
         return result
+
+
+#--------------------function of Rex contact username--------------------
+def check_contact_name(contact_name):
+    regex = re.compile(r'^[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFFa-zA-Z0-9]+$')
+    if not regex.search(contact_name):
+        return False
+
+    return True
+
+#--------------------function of Rex contact email--------------------
+def check_contact_email(contact_email):
+    regex = re.compile(r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$')
+    if not regex.search(contact_email):
+      return False
+    
+    return True
+
+#--------------------function of Rex contact email--------------------
+def check_contact_phone(contact_phone):
+    regex = re.compile(r"^09\d{8}$")
+    if not regex.search(contact_phone):
+      return False
+    
+    return True
+

@@ -10,10 +10,28 @@ orders = Blueprint(
 @orders.route("/api/orders", methods = ["POST"])
 def api_orders():
     data = post_orders_data()
-    if data == "建立失敗":
+    if data == "欄位有空":
         return jsonify({
             "error": True,
             "message": "建立失敗，請確認是否欄位都有填寫"
+        }), 400
+
+    if data == "姓名格式錯誤":
+        return jsonify({
+            "error": True,
+            "message": "建立失敗，姓名不得輸入特殊符號"
+        }), 400
+        
+    if data == "email格式錯誤":
+        return jsonify({
+            "error": True,
+            "message": "建立失敗，請確認email格式是否正確"
+        }), 400
+
+    if data == "電話號碼格式錯誤":
+        return jsonify({
+            "error": True,
+            "message": "建立失敗，請確認電話號碼格式是否正確"
         }), 400
 
     if data == False:

@@ -104,36 +104,36 @@ submitForSignin.addEventListener("click", function(e){
     removeErrorMessage()
     const signinCard = document.querySelector(".signinCard");
     const signinCardDiv = document.createElement("div");
-    const url = "/api/user";
-    const headers = {
-        "Content-Type": "application/json"
-    };
-    const body = {
-        "name": document.getElementById("signinUsername").value,
-        "email": document.getElementById("signinEmail").value,
-        "password": document.getElementById("signinPassword").value
-    };
-    if(body.name == "" | body.email == "" | body.password == ""){
-        signinCardDiv.className = "loginErrorMessage";
-        signinCardDiv.textContent = "請確認欄位皆已輸入";
-        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    let name = document.getElementById("signinUsername").value;
+    let email = document.getElementById("signinEmail").value;
+    let password = document.getElementById("signinPassword").value;
+
+    if(name == "" | email == "" | password == ""){
+        createErrorMessage("請確認欄位皆已輸入", "signin")
+        return
     }
-    else if(checkUsername(body.name) === false){
-        signinCardDiv.className = "loginErrorMessage";
-        signinCardDiv.textContent = "姓名不得輸入特殊符號";
-        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    else if(!checkUsername(name)){
+        createErrorMessage("姓名不得輸入特殊符號", "signin")
+        return
     }
-    else if(checkEmail(body.email) === false){
-        signinCardDiv.className = "loginErrorMessage";
-        signinCardDiv.textContent = "email格式錯誤";
-        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    else if(!checkEmail(email)){
+        createErrorMessage("email格式錯誤", "signin")
+        return
     }
-    else if(checkPassword(body.password) === false){
-        signinCardDiv.className = "loginErrorMessage";
-        signinCardDiv.textContent = "密碼格式錯誤";
-        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    else if(!checkPassword(password)){
+        createErrorMessage("密碼格式錯誤", "signin")
+        return
     }
     else{
+        const url = "/api/user";
+        const headers = {
+            "Content-Type": "application/json"
+        };
+        const body = {
+            "name": name,
+            "email": email,
+            "password": password
+        };
         fetch(url, {
             method: "POST",
             headers: headers,
@@ -148,14 +148,12 @@ submitForSignin.addEventListener("click", function(e){
                 location.reload()
             }
             if(data.message == "輸入的email格式不正確"){
-                signinCardDiv.className = "loginErrorMessage";
-                signinCardDiv.textContent = "註冊失敗，輸入的email格式不正確";
-                signinCard.insertBefore(signinCardDiv, changeToLogin);
+                createErrorMessage("註冊失敗，輸入的email格式不正確", "signin")
+                return
             }
             if(data.message == "該email已被註冊"){
-                signinCardDiv.className = "loginErrorMessage";
-                signinCardDiv.textContent = "註冊失敗，電子信箱已被註冊";
-                signinCard.insertBefore(signinCardDiv, changeToLogin);
+                createErrorMessage("註冊失敗，電子信箱已被註冊", "signin")
+                return
             }
         })
     }
@@ -167,30 +165,30 @@ submitForLogin.addEventListener("click", function(e){
     removeErrorMessage();
     const loginCard = document.querySelector(".loginCard");
     const loginCardDiv = document.createElement("div");
-    const url = "/api/user/auth";
-    const headers = {
-        "Content-Type": "application/json"
-    };
-    let body = {
-        "email": document.getElementById("loginEmail").value,
-        "password": document.getElementById("loginPassword").value
-    };
-    if(body.email == "" | body.password == ""){
-        loginCardDiv.className = "loginErrorMessage";
-        loginCardDiv.textContent = "請確認欄位皆已輸入";
-        loginCard.insertBefore(loginCardDiv, changeToSignin);
+    let email = document.getElementById("loginEmail").value
+    let password = document.getElementById("loginPassword").value
+
+    if(email == "" | password == ""){
+        createErrorMessage("請確認欄位皆已輸入", "login")
+        return 
     }
-    else if(checkEmail(body.email) === false){
-        loginCardDiv.className = "loginErrorMessage";
-        loginCardDiv.textContent = "email格式錯誤";
-        loginCard.insertBefore(loginCardDiv, changeToSignin);
+    else if(!checkEmail(email)){
+        createErrorMessage("輸入的email格式錯誤", "login")
+        return
     }
-    else if(checkPassword(body.password) === false){
-        loginCardDiv.className = "loginErrorMessage";
-        loginCardDiv.textContent = "密碼格式錯誤";
-        loginCard.insertBefore(loginCardDiv, changeToSignin);
+    else if(!checkPassword(password)){
+        createErrorMessage("輸入的密碼格式錯誤", "login")
+        return
     }
     else{
+        const url = "/api/user/auth";
+        const headers = {
+            "Content-Type": "application/json"
+        };
+        let body = {
+            "email": email,
+            "password": password
+        };
         fetch(url, {
             method: "PUT",
             headers: headers,
@@ -205,19 +203,39 @@ submitForLogin.addEventListener("click", function(e){
                 location.reload();
             }
             else{
-                loginCardDiv.className = "loginErrorMessage";
-                loginCardDiv.textContent = "登入失敗，電子信箱或密碼輸入錯誤";
-                loginCard.insertBefore(loginCardDiv, changeToSignin);
+                createErrorMessage("登入失敗，電子信箱或密碼輸入錯誤", "login")
+                return
             }
         })
     }
 })
+
+
+/*--------------------function of create error message--------------------*/
+function createErrorMessage(errorMessage, condition){
+    if(condition == "signin"){
+        const signinCard = document.querySelector(".signinCard");
+        const signinCardDiv = document.createElement("div");
+        signinCardDiv.className = "loginErrorMessage";
+        signinCardDiv.textContent = errorMessage;
+        signinCard.insertBefore(signinCardDiv, changeToLogin);
+    }
+    if(condition == "login"){
+        const loginCard = document.querySelector(".loginCard");
+        const loginCardDiv = document.createElement("div");
+        loginCardDiv.className = "loginErrorMessage";
+        loginCardDiv.textContent = errorMessage;
+        loginCard.insertBefore(loginCardDiv, changeToSignin);
+    }
+}
+
 
 /*--------------------input addEventListener of remove error message--------------------*/
 const formEmailInput = document.getElementById("loginEmail")
 formEmailInput.addEventListener("click", function(){
     removeErrorMessage()
 })
+
 const formPasswordInput = document.getElementById("loginPassword")
 formPasswordInput.addEventListener("click", function(){
     removeErrorMessage()
@@ -227,10 +245,12 @@ const signinUsername = document.getElementById("signinUsername")
 signinUsername.addEventListener("click", function(){
     removeErrorMessage()
 })
+
 const signinEmail = document.getElementById("signinEmail")
 signinEmail.addEventListener("click", function(){
     removeErrorMessage()
 })
+
 const signinPassword = document.getElementById("signinPassword")
 signinPassword.addEventListener("click", function(){
     removeErrorMessage()

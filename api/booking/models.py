@@ -127,3 +127,6 @@ def delete_booking_data():
                 return True
             finally:
                 c.close()
+
+
+
