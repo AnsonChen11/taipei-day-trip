@@ -21,14 +21,12 @@ def get_attraction_by_page_and_keyword():
             attraction.mrt,
             attraction.lat,
             attraction.lng,
-        GROUP_CONCAT
-            (attractionimages.images SEPARATOR ',') 
+        GROUP_CONCAT(attractionimages.images SEPARATOR ',') 
         AS 
             images 
         FROM 
             attraction 
-        INNER JOIN 
-            attractionimages 
+        INNER JOIN attractionimages 
         ON 
             attraction.id = attractionimages.image_id
         WHERE 
@@ -74,10 +72,16 @@ def get_attraction_by_page_and_keyword():
             attraction.lat,
             attraction.lng,
         GROUP_CONCAT(attractionimages.images SEPARATOR ',') 
-        AS images FROM attraction 
-        INNER JOIN attractionimages 
-        ON attraction.id = attractionimages.image_id
-        GROUP BY id
+        AS 
+            images 
+        FROM 
+            attraction 
+        INNER JOIN 
+            attractionimages 
+        ON 
+            attraction.id = attractionimages.image_id
+        GROUP BY 
+            id
         LIMIT %s,%s
         '''
         value = ((page * 12), 12)
@@ -140,11 +144,18 @@ def get_attraction_id(id):
             attraction.lat,
             attraction.lng,
         GROUP_CONCAT(attractionimages.images SEPARATOR ',') 
-        AS images FROM attraction 
-        INNER JOIN attractionimages 
-        ON attraction.id = attractionimages.image_id
-        WHERE attraction.id = %s
-        GROUP BY id
+        AS 
+            images 
+        FROM 
+            attraction 
+        INNER JOIN 
+            attractionimages 
+        ON 
+            attraction.id = attractionimages.image_id
+        WHERE 
+            attraction.id = %s
+        GROUP BY 
+            id
     '''
     cur.execute(sql, (id,))
     query = cur.fetchone()

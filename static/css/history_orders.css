@@ -59,6 +59,9 @@ article{
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
 }
+.orders_details_button a{
+    text-decoration: none;
+}
 .orders_details_button:hover{
     cursor: pointer;
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "components/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/member.css') }}">
+    <script src="{{ url_for('static', filename='/javascript/history_orders.js')}}" defer></script>
+</head>
+<body>
+    {% include "components/nav.html" %}
+    {% include "components/login.html" %}
+    <main>
+        <div class="member_profile">123</div>
+        <div class="member_info">456</div>
+    </main>
+    {% include "components/footer.html" %}
+</body>

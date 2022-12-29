@@ -1,0 +1,23 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    padding-top: 54px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #666666;
+}
+main{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.member_profile{
+    width: 100%;
+}
+.member_info{
+    width: 100%;
+}
