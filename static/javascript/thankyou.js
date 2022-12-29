@@ -50,20 +50,26 @@ function createElementForThankyou(data){
 /* -------------------------------------------------------------------------------- */
         const thankyou_imageDIV = document.createElement("div");
         thankyou_imageDIV.className = "thankyou_image";
+        const thankyou_imageLink = document.createElement("a");
+        thankyou_imageLink.href = "/attraction/" + e.attraction.id
         const thankyou_imageImg = document.createElement("img");
         thankyou_imageImg.src = e.attraction.image;
-        thankyou_imageDIV.appendChild(thankyou_imageImg);
+        thankyou_imageLink.appendChild(thankyou_imageImg);
+        thankyou_imageDIV.appendChild(thankyou_imageLink);
 /* -------------------------------------------------------------------------------- */
         const thankyou_listDIV = document.createElement("div");
         thankyou_listDIV.className = "thankyou_list";
 
         const thankyou_attractionUl = document.createElement("ul");
         thankyou_attractionUl.className = "thankyou_attraction";
+        const thankyou_nameLink = document.createElement("a");
+        thankyou_nameLink.href = "/attraction/" + e.attraction.id
         const thankyou_attractionLi = document.createElement("li");
         thankyou_attractionLi.textContent = "台北一日遊：";
         const thankyou_attractionLi2 = document.createElement("li");
         thankyou_attractionLi2.textContent = e.attraction.name;
-        thankyou_attractionUl.append(thankyou_attractionLi, thankyou_attractionLi2);
+        thankyou_nameLink.append(thankyou_attractionLi, thankyou_attractionLi2)
+        thankyou_attractionUl.appendChild(thankyou_nameLink);
 
         const thankyou_dateUl = document.createElement("ul");
         thankyou_dateUl.className = "thankyou_date";

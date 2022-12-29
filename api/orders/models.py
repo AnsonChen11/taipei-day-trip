@@ -229,7 +229,7 @@ def get_orderNumber_details(orderNumber):
                 booking.order_number = payment.order_number
             WHERE
                 orders.order_number = %s
-            GROUP BY orders.order_number, booking.date
+            GROUP BY booking.booking_id
             '''
             cur.execute(get_orderNumber_details_sql, (orderNumber,))
             query = cur.fetchall()
@@ -253,7 +253,6 @@ def get_orderNumber_details(orderNumber):
                     attraction_list.append(attraction)
                     total_price += query[i]["price"]
                     i = i + 1
-
                 result = {
                     "data": {
                         "number": query[0]["order_number"],
@@ -277,6 +276,127 @@ def get_orderNumber_details(orderNumber):
             
         return result
 
+#------------Get Orders History Details model-------------
+def get_orders_history_details(user_id):
+    cookiesToken = request.cookies.get("token")
+    if cookiesToken == None:
+        return False
+    
+    else:
+        try:
+            c = conn()
+            cur = c.cursor(dictionary=True)
+            # get_orders_number_by_user_sql = '''
+            # SELECT
+            #     order_number
+            # FROM
+            #     orders
+            # WHERE
+            #     user_id = %s
+            # '''
+            # cur.execute(get_orders_number_by_user_sql, (user_id,))
+            # orders_number_by_user = cur.fetchall()
+
+            get_orders_history_details_sql = '''
+            SELECT 
+                user.name,
+                user.email,
+                attraction.id, 
+                attraction.name, 
+                attraction.address,  
+                attractionimages.images,
+                booking.date, 
+                booking.time, 
+                booking.price,
+                orders.order_number,
+                orders.order_time,
+                orders.contact_name,
+                orders.contact_email,
+                orders.contact_phone,
+                payment.payment_status
+            FROM 
+                booking 
+            INNER JOIN 
+                attraction 
+            ON 
+                booking.attractionId = attraction.id
+            INNER JOIN 
+                user 
+            ON 
+                booking.user_id = user.id
+            INNER JOIN
+                attractionimages
+            ON
+                booking.attractionId = attractionimages.image_id
+            INNER JOIN
+                orders
+            ON
+                booking.order_number = orders.order_number
+            INNER JOIN
+                payment
+            ON
+                booking.order_number = payment.order_number
+            WHERE
+                booking.user_id = %s
+            GROUP BY 
+                booking.booking_id
+            ORDER BY 
+                orders.order_number DESC
+            '''
+            cur.execute(get_orders_history_details_sql, (user_id,))
+            orders_details = cur.fetchall()
+            if orders_details:
+                result = {}
+                for order in orders_details:
+                    order_number = order['order_number']
+
+                    if order_number not in result:
+                        result[order_number] = {
+                            'number': order_number,
+                            'totalPrice': 0,
+                            'order_time': order['order_time'],
+                            'trip': [],
+                            'contact': {
+                                'name': order['contact_name'],
+                                'email': order['contact_email'],
+                                'phone': order['contact_phone']
+                            },
+                            'status': order['payment_status']
+                        }
+                        
+                    total_price = result[order_number]['totalPrice']
+                    total_price += order['price']
+                    result[order_number]['totalPrice'] = total_price
+
+                    result[order_number]['trip'].append({
+                        'attraction': {
+                            'id': order['id'],
+                            'name': order['name'],
+                            'address': order['address'],
+                            'image': order['images']
+                        },
+                        'date': order['date'],
+                        'time': order['time'],
+                        'price': order['price']
+                    }) 
+                new_data = []
+                for data in result.items():
+                    new_data.append(data[1])
+                
+                result = {
+                    "data": new_data
+                }
+                
+            else:
+                result = {
+                    "data": None
+                } 
+
+        finally:
+            cur.close()
+            c.close()
+
+        return result
 
 #--------------------function of Rex contact username--------------------
 def check_contact_name(contact_name):

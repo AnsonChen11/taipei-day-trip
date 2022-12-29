@@ -37,20 +37,26 @@ function createElementForBooking(data){
 /* -------------------------------------------------------------------------------- */
         const booking_imageDIV = document.createElement("div");
         booking_imageDIV.className = "booking_image";
+        const booking_imageLink = document.createElement("a");
+        booking_imageLink.href = "/attraction/" + e.attraction.id
         const booking_imageImg = document.createElement("img");
         booking_imageImg.src = e.attraction.image;
-        booking_imageDIV.appendChild(booking_imageImg);
+        booking_imageLink.appendChild(booking_imageImg);
+        booking_imageDIV.appendChild(booking_imageLink);
 /* -------------------------------------------------------------------------------- */
         const booking_listDIV = document.createElement("div");
         booking_listDIV.className = "booking_list";
 
         const booking_attractionUl = document.createElement("ul");
         booking_attractionUl.className = "booking_attraction";
+        const booking_nameLink = document.createElement("a");
+        booking_nameLink.href = "/attraction/" + e.attraction.id
         const booking_attractionLi = document.createElement("li");
         booking_attractionLi.textContent = "台北一日遊：";
         const booking_attractionLi2 = document.createElement("li");
         booking_attractionLi2.textContent = e.attraction.name;
-        booking_attractionUl.append(booking_attractionLi, booking_attractionLi2);
+        booking_nameLink.append(booking_attractionLi, booking_attractionLi2)
+        booking_attractionUl.appendChild(booking_nameLink);
 
         const booking_dateUl = document.createElement("ul");
         booking_dateUl.className = "booking_date";

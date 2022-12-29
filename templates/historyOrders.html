@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "components/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/history_orders.css') }}">
+    <script src="{{ url_for('static', filename='/javascript/history_orders.js')}}" defer></script>
+</head>
+<body>
+    {% include "components/nav.html" %}
+    {% include "components/login.html" %}
+    <main>
+        <div class="history_view"></div>
+        <!-- <article>
+            <div class="container">
+                <div class="orders_number orders_date">
+                    <h3>訂單編號：20221228171116</h3>
+                    <h3>訂購日期：2022-12-28 12:39:33</h3>
+                </div>
+                <div class="orders_overall">
+                    <div class="orders_overall_details">
+                        <h4>台北一日遊</h4>
+                        <h4>訂購總額：NT$ 5000</h4>
+                        <h4 class="orders_status">已確認訂單</h4>
+                        <button class="orders_details_button">
+                            <a href="/">訂購明細</a>
+                        </button>
+                    </div>
+                    <div class="orders_img">
+                        <img src="/static/images/image 10.png">
+                    </div>
+                </div>
+            </div>
+        </article> -->
+    </main>
+    {% include "components/footer.html" %}
+</body>

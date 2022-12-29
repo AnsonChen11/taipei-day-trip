@@ -8,6 +8,14 @@ body{
     box-sizing: border-box;
     color: #666666;
 }
+.booking_attraction a{
+    text-decoration: none;
+    color: #448899;
+    display: flex;
+}
+.booking_attraction a:hover{
+    color: #31a4c1;
+}
 main{
     width: 100%;
     padding-top: 100px;
@@ -63,12 +71,16 @@ li{
 }
 .booking_image img{
     width: 100%;
-    object-fit: cover
+    object-fit: cover;
+    border-radius: 7px;
 }
 .trash{
     margin-bottom: auto;
     margin-left: auto;
     cursor: pointer;
+}
+.trash:hover{
+    -webkit-filter: brightness(0)
 }
 .booking_contact input, .tpfield{
     width: 200px;

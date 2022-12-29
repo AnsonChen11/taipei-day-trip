@@ -80,3 +80,13 @@ def api_order_number(orderNumber):
 
     return orderNumber_details
 
+@orders.route("/api/orders/<user_id>")
+def orders_history(user_id):
+    orders_history_details = get_orders_history_details(user_id)
+    if orders_history_details == False:
+        return jsonify({
+            "error": True,
+            "message": "未登入系統"
+            }), 403
+
+    return orders_history_details

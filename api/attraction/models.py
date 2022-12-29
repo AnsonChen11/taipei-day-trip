@@ -21,15 +21,22 @@ def get_attraction_by_page_and_keyword():
             attraction.mrt,
             attraction.lat,
             attraction.lng,
-        GROUP_CONCAT(attractionimages.images SEPARATOR ',') 
-        AS images FROM attraction 
-        INNER JOIN attractionimages 
-        ON attraction.id = attractionimages.image_id
+        GROUP_CONCAT
+            (attractionimages.images SEPARATOR ',') 
+        AS 
+            images 
+        FROM 
+            attraction 
+        INNER JOIN 
+            attractionimages 
+        ON 
+            attraction.id = attractionimages.image_id
         WHERE 
             category = %s 
         OR 
             name LIKE '%' %s '%' 
-        GROUP BY id 
+        GROUP BY 
+            id 
         LIMIT %s,%s
         ''' #'%' %s '%'中間要空隔
         value = (keyword, keyword, (page * 12), 12)
@@ -49,7 +56,6 @@ def get_attraction_by_page_and_keyword():
         value = (keyword, keyword)
         cur.execute(count_sql, value)
         num = cur.fetchone()["COUNT(*)"]
-        print(num)
         cur.close()
         c.close()
 
@@ -172,7 +178,6 @@ def get_attraction_categories():
     sql = '''SELECT DISTINCT category FROM attraction'''
     cur.execute(sql)
     query = cur.fetchall()
-    print(query)
     i = 0
     list = []
     try:

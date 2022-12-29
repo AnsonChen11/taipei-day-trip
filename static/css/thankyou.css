@@ -8,6 +8,14 @@ body{
     box-sizing: border-box;
     color: #666666;
 }
+.thankyou_attraction a{
+    text-decoration: none;
+    color: #448899;
+    display: flex;
+}
+.thankyou_attraction a:hover{
+    color: #31a4c1;
+}
 main{
     width: 100%;
     padding-top: 100px;
@@ -63,8 +71,10 @@ li{
 }
 .thankyou_image img{
     width: 100%;
-    object-fit: cover
+    object-fit: cover;
+    border-radius: 7px;
 }
+
 @media(max-width : 1200px){
     .thankyou_view{
         width: 90%

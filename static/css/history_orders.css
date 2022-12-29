@@ -1,0 +1,82 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    padding-top: 54px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #666666;
+}
+main{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.history_view{
+    width: 70%;
+}
+article{
+    width: 70%;
+    background-color: #e4e4e449;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.container{
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.orders_number, .orders_overall{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+}
+.orders_overall_details{
+    padding: 0px;
+}
+.orders_status{
+    color: rgb(0, 179, 113);
+    font-weight: 500;
+}
+.orders_img{
+    width: 200px;
+    height: 150px;
+}
+.orders_img img{
+    width: 100%;
+    object-fit: contain;
+    border-radius: 7px;
+    align-items: center;
+}
+.orders_details_button{
+    font-weight: 700;
+    border-style: 1px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+.orders_details_button:hover{
+    cursor: pointer;
+}
+@media(max-width : 1200px){
+    .container{
+        width: 90%;
+    }
+}
+@media(max-width : 900px){
+    .orders_number{
+        flex-direction: column;
+    }
+    .orders_overall{
+        flex-direction: column-reverse;
+    }
+}
+@media(max-width : 600px){
+    article{
+        width: 90%;
+    }
+}

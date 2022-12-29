@@ -116,6 +116,7 @@ function showSlides(n){
 /* ---------------------------click booking button to book ----------------------------- */
 const btn = document.querySelector(".btn")
 btn.addEventListener("click", function(){
+    removeErrorMessage()
     if(document.cookie){
         let attractionId = location.pathname.slice(12,);
         let date = document.querySelector(".date").value;
@@ -145,12 +146,11 @@ btn.addEventListener("click", function(){
             })
         }
         else{
-            const btn = document.querySelector(".btn");
-            const details = document.querySelector(".details");
-            const detailsDiv = document.createElement("div");
-            detailsDiv.className = "loginErrorMessage";
-            detailsDiv.textContent = "請確認欄位皆已填寫！";
-            details.insertBefore(detailsDiv, btn)
+            const dateDiv = document.querySelector(".dateDiv");
+            const dateMessage = document.createElement("span");
+            dateMessage.className = "loginErrorMessage";
+            dateMessage.textContent = "請記得選擇日期！";
+            dateDiv.appendChild(dateMessage)
         }
     }
     if(!document.cookie){
@@ -158,7 +158,13 @@ btn.addEventListener("click", function(){
         login.style.display = "block"
     }
 })
-
+/*--------------------function of remove error message--------------------*/
+function removeErrorMessage(){
+    const loginErrorMessage = document.querySelector(".loginErrorMessage")
+    if(loginErrorMessage){
+        loginErrorMessage.remove()
+    }
+}
 /* ---------------------------datepicker only allow tomorrow onwards----------------------------- */
 const date = document.querySelector('.date');
 

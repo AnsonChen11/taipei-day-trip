@@ -27,6 +27,7 @@ auth_booking.addEventListener("click", function(){
 /*------------------------------for nav bar------------------------------*/
 const auth_login = document.querySelector(".auth_login")
 const auth_logout = document.querySelector(".auth_logout")
+const auth_history = document.querySelector(".auth_history")
 
 /*------------------------onload to check user login or not-------------------*/
 fetch("/api/user/auth")
@@ -38,6 +39,7 @@ fetch("/api/user/auth")
     else{
         auth_login.style.display = "none"
         auth_logout.style.display = "block"
+        auth_history.style.display = "block"
         sessionStorage.setItem("userData", JSON.stringify({
             "id": data.data.id,
             "name": data.data.name,
@@ -45,12 +47,12 @@ fetch("/api/user/auth")
         }));
     }
 })
-
+/*------------------------EventListener to click login -------------------*/
 auth_login.addEventListener("click", function(){
     login.style.display = "block"
     overlay.style.display = "block"
 })
-
+/*------------------------EventListener to click logout -------------------*/
 auth_logout.addEventListener("click", function(){
     const url = "/api/user/auth"
     const headers = {
@@ -67,6 +69,17 @@ auth_logout.addEventListener("click", function(){
             sessionStorage.removeItem("userData")
         }
     })
+})
+/*------------------------EventListener to click member -------------------*/
+auth_history.addEventListener("click", function(){
+    let userData = sessionStorage.getItem("userData") 
+    if(userData){
+        location.href="/historyOrders"
+    }
+    else{
+        overlay.style.display = "block";
+        login.style.display = "block"
+    }
 })
 
 /*--------------------close button for login or signin--------------------*/
