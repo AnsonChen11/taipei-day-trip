@@ -15,9 +15,38 @@ main{
     flex-direction: column;
     align-items: center;
 }
-.member_profile{
-    width: 100%;
+.member_view{
+    display: flex;
+    width: 1200px;
+    height: 90vh;
+    justify-content: space-between;
 }
-.member_info{
-    width: 100%;
+.member_profile_card{
+    width: 30%;
+    border-radius: 10px;
+    background-color: #d8d8d8;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.profile_pic{
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    margin-top: 80px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+.profile_name{
+    font-weight: 700;
+    font-size: 20px;
+}
+.profile_history_orders{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.member_info_card{
+    width: 68%;
+    background-color: #ffa7a7;
+    border-radius: 10px;
 }

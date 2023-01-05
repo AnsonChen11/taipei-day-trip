@@ -165,7 +165,10 @@ article{
     color: #666666;
 }
 .information{
-    width: 1200px
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .description, .infos_address, .infos_transport{
     margin: 20px;
@@ -175,6 +178,20 @@ article{
 }
 .list{
     font-weight: 700;
+}
+.map_container{
+	width: 90%;
+    height: 400px;
+	display: flex;
+	justify-content: center;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.map{
+	height: 100%;
+    width: 100%;
+    align-items: center;
 }
 
 @media(max-width : 1200px){

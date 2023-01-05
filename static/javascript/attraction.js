@@ -22,7 +22,7 @@ window.onload = async function(){
             dotSpan.setAttribute("dot_id", i)
             dot.appendChild(dotSpan)
         }
-        
+        console.log(data)
         const attraction = document.querySelector(".profile");
         const attractionDiv = document.createElement("div");
         attractionDiv.textContent = data.data.name;
@@ -53,6 +53,9 @@ window.onload = async function(){
         transportation.appendChild(transportationSpan);
         
         showSlides(slideIndex)
+        let PositionLat = data.data.lat
+        let PositionLon = data.data.lng
+        initMap(PositionLat, PositionLon)
     })  
 }
 
@@ -171,3 +174,31 @@ const date = document.querySelector('.date');
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 date.min = tomorrow.toISOString().split('T')[0];
+
+/* ---------------------------google map APIs----------------------------- */
+let map;
+
+function initMap(PositionLat, PositionLon){
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: PositionLat, lng: PositionLon },
+    zoom: 16,
+  });
+    const marker = new google.maps.Marker({
+    position: { lat: PositionLat, lng: PositionLon },
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    });
+    marker.addListener("click", toggleBounce);
+}
+
+function toggleBounce(){
+    if(marker.getAnimation() !== null){
+      marker.setAnimation(null);
+    } 
+    else{
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+window.initMap = initMap;

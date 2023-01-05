@@ -3,14 +3,31 @@
 <head>
     {% include "components/head.html" %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/member.css') }}">
-    <script src="{{ url_for('static', filename='/javascript/history_orders.js')}}" defer></script>
+    <script src="{{ url_for('static', filename='/javascript/member.js')}}" defer></script>
 </head>
 <body>
     {% include "components/nav.html" %}
     {% include "components/login.html" %}
     <main>
-        <div class="member_profile">123</div>
-        <div class="member_info">456</div>
+        <div class = "member_view">
+            <div class="member_profile_card">
+                <form class="profile_pic" action="/somewhere/to/upload" enctype="multipart/form-data">
+                <input type="file" id="file-uploader" accept="image/gif, image/jpeg, image/png">
+                <img id='preview'> 
+                </form>
+                <!-- <div class="profile_pic"></div> -->
+                <div class="profile_name">Anson Chen</div>
+                <div class="profile_history_orders">我的訂單紀錄</div>
+            </div>
+            <div class="member_info_card">
+                <!-- <div class="member_info">帳號管理</div><hr>
+                <input type="text">姓名
+                <input type="select">性別
+                <input type="date">出生日期
+                <input type="phone">電話號碼
+                <input type="email">電子信箱 -->
+            </div>
+        </div>
     </main>
     {% include "components/footer.html" %}
 </body>
