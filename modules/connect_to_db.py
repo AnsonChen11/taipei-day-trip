@@ -1,14 +1,16 @@
-import mysql.connector
+import mysql.connector, os
 from mysql.connector import pooling
+from dotenv import load_dotenv
 
 #connection pool
+load_dotenv()
 connection_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name = "taipeitrip_pool",
-    pool_size = 5,
+    pool_size = 10,
     pool_reset_session = True,
     host = "localhost",
 	user = "root",
-	password = "12345678",
+	password = os.getenv("mysql_password"),
 	database = "taipeitrip",
 	charset = "utf8",
 )

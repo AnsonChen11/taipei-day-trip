@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "components/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/thankyou.css') }}">
+    <script src="{{ url_for('static', filename='/javascript/thankyou.js')}}" defer></script>
+</head>
+<body>
+    {% include "components/nav.html" %}
+    {% include "components/login.html" %}
+    <main>
+        <div class="thankyou_view">
+            <article class="thankyou_overall">
+                <div class="thankyou_subtitle"></div>
+                <div class="thankyou_orderNumber"></div>
+                <div class="thankyou_orderName"></div>
+                <div class="thankyou_contactPhone"></div>
+                <div class="thankyou_contactEmail"></div>
+                <div class="thankyou_totalPrice"></div>
+                <hr>
+            </article>
+        </div>
+    </main>
+    {% include "components/footer.html" %}
+</body>

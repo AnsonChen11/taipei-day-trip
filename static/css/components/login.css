@@ -79,6 +79,18 @@ input::-webkit-input-placeholder{
 input{
     padding-left: 10px;
 }
+/* form input:valid{
+    border:2px solid rgb(6, 193, 6);
+}
+form input:invalid{
+    border:2px solid red;
+}
+form input.valid{
+    border:2px solid rgb(6, 193, 6);
+}
+form input.invalid{
+    border:2px solid red;
+} */
 .email, .password, .username{
     box-sizing: border-box;
 }
@@ -92,11 +104,16 @@ input{
 .hint{
     cursor: pointer;
 }
-.loginErrorMessage{
+.loginErrorMessage, ErrorMessage{
     color: rgb(250, 114, 114);
     font-weight: 500;
 }
 .loginSuccessfulMessage{
     color: #1da56c;
     font-weight: 500;
+}
+.form span{
+    font-size: 10px;
+    font-weight: 300;
+    padding-bottom: 10px;
 }

@@ -13,6 +13,9 @@ nav{
 nav a, .container a{
     text-decoration: none;
 }
+nav a:hover{
+    -webkit-filter: brightness(1.2)
+}
 .view{
     width: 1200px;
     height: 34px;
@@ -29,11 +32,18 @@ nav a, .container a{
 .auth_menu{
     display: flex;
     font-weight: 500;
-    padding: 10px;
+    /* padding: 10px; */
     gap: 10px; 
     color: #666666;
     cursor: pointer;
 }
-.auth_logout{
+.auth_history, .auth_booking, .auth_login, .auth_logout{
+    padding: 10px;
+    border-radius: 5px;
+}
+.auth_history:hover, .auth_booking:hover, .auth_login:hover, .auth_logout:hover{
+    background-color: #c7c7c76b;
+}
+.auth_history, .auth_logout{
     display: none;
 }

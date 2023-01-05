@@ -1,9 +1,11 @@
 import json, mysql.connector, re, os
+from dotenv import load_dotenv
 
+load_dotenv()
 conn = mysql.connector.connect(
   host = "localhost",
   user = "root",
-  password = "12345678",
+  password = os.getenv("mysql_password"),
   database = "taipeitrip",
   charset = "utf8",
 )
@@ -25,7 +27,11 @@ def create_table_user():
 
 def insert_table_user():
   cur = conn.cursor(buffered=True)
-  sql_insert_table_user = "INSERT INTO user(name, email, password) values('testname', 'test@gmail.com', 'testpassword')"
+  sql_insert_table_user = '''
+  INSERT INTO 
+    user(name, email, password) 
+    values('testname', 'test@gmail.com', 'testpassword')
+  '''
   cur.execute(sql_insert_table_user) 
   print("Insert value user Successfully")
   conn.commit()

@@ -7,6 +7,7 @@ window.onload = async function(){
     .then(data => {
         const slideShow = document.querySelector(".slideShowContainer");
         const dot = document.querySelector(".dots");
+        document.title = "台北一日遊 | " + data.data.name
         for(let i = 0; i < data.data.images.length; i++){
             const slideShowDiv = document.createElement("div");
             slideShowDiv.className = "slideShow fade";
@@ -18,7 +19,7 @@ window.onload = async function(){
 
             const dotSpan = document.createElement("span");
             dotSpan.className = "dot"
-            dotSpan.setAttribute("id", "dot" + i)
+            dotSpan.setAttribute("dot_id", i)
             dot.appendChild(dotSpan)
         }
         
@@ -55,7 +56,7 @@ window.onload = async function(){
     })  
 }
 
-//Option between morning or afternoon
+/* ------------------Option change price between morning or afternoon--------------------- */
 const morning = document.querySelector(".morning")
 const afternoon = document.querySelector(".afternoon")
 const price = document.querySelector(".price")
@@ -66,7 +67,7 @@ afternoon.addEventListener("click", function(){
     price.textContent = "新台幣 2500 元";
 })
 
-//slide next or previous image function
+/* ------------------click slides to change next or previous image--------------------- */
 const previous = document.querySelector(".previous")
 const next = document.querySelector(".next")
 previous.addEventListener("click", function(){
@@ -79,18 +80,18 @@ function plusSlides(n){
     showSlides(slideIndex += n);
 }
 
-
-
-// // click dot slide image function
-// const dotNumber = document.querySelector("#dot1")
-// console.log(dotNumber)
-// dotNumber.addEventListener("click", function(){
-//     console.log("1")
-//     currentSlide(1);
-// })
-// function currentSlide(n){
-//     showSlides(slideIndex = n);
-// }
+/* ---------------------------click dot to slide image ----------------------------- */
+document.addEventListener("click", function(e){
+    const target = e.target.closest("[dot_id]");
+    if(target){
+        let dotId = parseInt(target.getAttribute('dot_id')) + 1
+        currentSlide(dotId)
+    }
+});
+/* ----------------------function of currentSlide & showSlides------------------------ */
+function currentSlide(n){
+    showSlides(slideIndex = n);
+}
 
 function showSlides(n){
     let i;
@@ -99,7 +100,7 @@ function showSlides(n){
     if(n > slideShow.length){ //若index超過最後一張，回到第一張
         slideIndex = 1;
     }
-    if(n < 1){//若index超過第一張(小於1)，回到最後一張
+    if(n < 1){ //若index超過第一張(小於1)，回到最後一張
         slideIndex = slideShow.length;
     }
     for(i = 0; i < slideShow.length; i++){
@@ -112,8 +113,10 @@ function showSlides(n){
     dot[slideIndex-1].className += " active";
 }
 
+/* ---------------------------click booking button to book ----------------------------- */
 const btn = document.querySelector(".btn")
 btn.addEventListener("click", function(){
+    removeErrorMessage()
     if(document.cookie){
         let attractionId = location.pathname.slice(12,);
         let date = document.querySelector(".date").value;
@@ -137,23 +140,34 @@ btn.addEventListener("click", function(){
             })
             .then(response => response.json())
             .then(data => {
-                if(data.ok){
+                if(data){
                     window.location.replace("/booking")
                 }
             })
         }
         else{
-            const btn = document.querySelector(".btn");
-            const details = document.querySelector(".details");
-            const detailsDiv = document.createElement("div");
-            detailsDiv.className = "loginErrorMessage";
-            detailsDiv.textContent = "請確認欄位皆已填寫！";
-            details.insertBefore(detailsDiv, btn)
+            const dateDiv = document.querySelector(".dateDiv");
+            const dateMessage = document.createElement("span");
+            dateMessage.className = "loginErrorMessage";
+            dateMessage.textContent = "請記得選擇日期！";
+            dateDiv.appendChild(dateMessage)
         }
     }
     if(!document.cookie){
-        console.log("為登入")
         overlay.style.display = "block";
         login.style.display = "block"
     }
 })
+/*--------------------function of remove error message--------------------*/
+function removeErrorMessage(){
+    const loginErrorMessage = document.querySelector(".loginErrorMessage")
+    if(loginErrorMessage){
+        loginErrorMessage.remove()
+    }
+}
+/* ---------------------------datepicker only allow tomorrow onwards----------------------------- */
+const date = document.querySelector('.date');
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+date.min = tomorrow.toISOString().split('T')[0];

@@ -12,7 +12,8 @@ conn = mysql.connector.connect(
 cur = conn.cursor(buffered=True)
 
 def create_table_attraction():
-    sql_create_table = '''CREATE TABLE attraction(
+    sql_create_table = '''
+    CREATE TABLE attraction(
         id BIGINT PRIMARY KEY AUTO_INCREMENT, 
         name TEXT, 
         category TEXT, 
@@ -22,7 +23,8 @@ def create_table_attraction():
         mrt TEXT,
         lat DOUBLE,
         lng DOUBLE,
-        images json)'''
+        images json)
+    '''
 
     cur.execute(sql_create_table) 
     print("Create table Successfully")
