@@ -22,7 +22,6 @@ window.onload = async function(){
             dotSpan.setAttribute("dot_id", i)
             dot.appendChild(dotSpan)
         }
-        console.log(data)
         const attraction = document.querySelector(".profile");
         const attractionDiv = document.createElement("div");
         attractionDiv.textContent = data.data.name;
