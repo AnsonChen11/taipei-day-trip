@@ -11,13 +11,19 @@
     <main>
         <div class = "member_view">
             <div class="member_profile_card">
-                <form class="profile_pic" action="/somewhere/to/upload" enctype="multipart/form-data">
-                    <input type="file" id="file-uploader" accept="image/gif, image/jpeg, image/png">
-                    <!-- <button type="submit">Upload</button> -->
-                    <img id='preview'> 
-                </form>
-                <!-- <div class="profile_pic"></div> -->
-                <div class="profile_name">Anson Chen</div>
+                <!-- <form action="/somewhere/to/upload" enctype="multipart/form-data"> -->
+
+                <!-- </form> -->
+                <div class="upload_profile">
+                    <div class="profile_pic_container">
+                        <img id="profile_pic" class="profile_pic">
+                    </div>
+                    <input type="file" id="file-uploader" accept="image/gif, image/jpeg, image/png" style="display: none;">
+                    <label for="file-uploader" class="file-uploader">
+                        <img class="icon" src="/static/images/upload.png" alt="上傳檔案">
+                    </label>
+                </div>
+                <div class="profile_name"></div>
                 <div class="profile_history_orders">我的訂單紀錄</div>
             </div>
             <div class="member_info_card">
@@ -32,7 +38,7 @@
                         <input type="text" name="member_email" id="member_email">
                     </div>
                     <div>
-                        <label for="member_phone" class="member_phone">手機號碼(必填)</label>
+                        <label for="member_phone" class="member_phone">手機號碼</label>
                         <input type="text" name="member_phone" id="member_phone" maxlength="10">
                     </div>
                 </div>
