@@ -11,13 +11,23 @@ Taipei-Day-Trip is a travel e-commerce website that allows users to browse or se
 
 - Test Credit Card Infomation: 
   - Credit Card number（卡片號碼）: 4242 4242 4242 4242
-  - Credit Card Expiration Dates （過期時間）: 02/42
-  - Credit Card CCV Code （驗證密碼）: 424
+  - Credit Card Expiration Dates （過期時間）: 12/34
+  - Credit Card CCV Code （驗證密碼）: 123
 
 # Demo
-### Infinite Scroll Attractions, Keyword Search, and Attraction Image Carousel
-![ezgif com-optimize](https://user-images.githubusercontent.com/110713031/224634802-9efd39be-d759-4e9f-b212-4958e19d5515.gif)
-### Shopping Cart System, Checking Ordering, Payment System, and Reviewing the Order History
+- Infinite Scroll Attractions
+- Keyword Search
+- Attraction Image Carousel
+
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/110713031/224709898-5eafed1c-1fa4-4271-bdc9-1fabacd2f347.gif)
+
+
+- Shopping Cart System
+- Checking and Deleting Orders
+- Payment System
+- Viewing History Orders
+
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/110713031/224707338-3acbf39a-09ad-4d8c-8aae-e98f35bcc076.gif)
 
 # Table of Contents
 - [Main Features](#main-features)
@@ -61,8 +71,6 @@ Taipei-Day-Trip is a travel e-commerce website that allows users to browse or se
 
 #### AWS Cloud Service
 - EC2
-- S3
-- CloudFront
 
 #### Database
 - MySQL
@@ -79,8 +87,7 @@ Taipei-Day-Trip is a travel e-commerce website that allows users to browse or se
 
 
 ## System Architecture
-![TaipeiDayTrip Architecture](https://user-images.githubusercontent.com/110713031/224564857-6ccd72ad-7bb3-4751-81df-364373908ea7.jpeg)
-
+![TaipeiDayTrip Architecture](https://user-images.githubusercontent.com/110713031/224692742-9c64eaff-be01-4f86-8733-b23115ae506b.jpeg)
 
 
 
