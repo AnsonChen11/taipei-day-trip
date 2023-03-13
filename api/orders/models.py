@@ -7,10 +7,11 @@ import requests, json, datetime, random, os, re
 from dotenv import load_dotenv
 
 #------------Generate Order Number Randomly-------------
+current_date = datetime.datetime.now().strftime("%Y%m%d")
+
 def generate_order_number(current_date):
     suffix = str(random.randint(0, 1000000)).zfill(6)
     return current_date + suffix
-current_date = datetime.datetime.now().strftime("%Y%m%d")
 
 #------------post orders data model-------------
 def post_orders_data():
@@ -77,19 +78,17 @@ def post_orders_data():
             attraction_id = attraction["attraction"]["id"]
             attraction_ids.append(attraction_id)
 
-        booking_id_str = ', '.join(['%s'] * len(attraction_ids))
         update_order_number_to_booking_sql = '''
             UPDATE 
                 booking  
             SET  
                 order_number = %s
             WHERE 
-                attractionId IN ({})
-        '''.format(booking_id_str)
-
+                order_number IS NULL
+        '''
         cur.execute(orders_sql, orders_values)
         cur.execute(payment_sql, (order_number, 1))
-        cur.execute(update_order_number_to_booking_sql, (order_number, *attraction_ids))
+        cur.execute(update_order_number_to_booking_sql, (order_number,))
         c.commit()
         cur.close()
 
@@ -233,7 +232,6 @@ def get_orderNumber_details(orderNumber):
             '''
             cur.execute(get_orderNumber_details_sql, (orderNumber,))
             query = cur.fetchall()
-            
             if query:
                 i = 0
                 attraction_list = []
@@ -341,7 +339,7 @@ def get_orders_history_details(user_id):
             GROUP BY 
                 booking.booking_id
             ORDER BY 
-                orders.order_number DESC
+                orders.order_time DESC
             '''
             cur.execute(get_orders_history_details_sql, (user_id,))
             orders_details = cur.fetchall()

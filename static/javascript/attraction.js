@@ -119,7 +119,7 @@ function showSlides(n){
 const btn = document.querySelector(".btn")
 btn.addEventListener("click", function(){
     removeErrorMessage()
-    if(document.cookie){
+    if(getCookie("token")){
         let attractionId = location.pathname.slice(12,);
         let date = document.querySelector(".date").value;
         let time = document.querySelector("input[name='radio']:checked").value;
@@ -155,11 +155,19 @@ btn.addEventListener("click", function(){
             dateDiv.appendChild(dateMessage)
         }
     }
-    if(!document.cookie){
+    if(!getCookie("token")){
         overlay.style.display = "block";
         login.style.display = "block"
     }
 })
+/*--------------------function of get cookie--------------------*/
+function getCookie(key){
+	let value = "; " + document.cookie;
+	let parts = value.split("; " + key + "=");
+	if(parts.length === 2){
+		return parts.pop().split(";").shift();
+	}
+}
 /*--------------------function of remove error message--------------------*/
 function removeErrorMessage(){
     const loginErrorMessage = document.querySelector(".loginErrorMessage")
@@ -168,7 +176,7 @@ function removeErrorMessage(){
     }
 }
 /* ---------------------------datepicker only allow tomorrow onwards----------------------------- */
-const date = document.querySelector('.date');
+const date = document.querySelector(".date");
 
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);

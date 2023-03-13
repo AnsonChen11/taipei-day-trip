@@ -305,7 +305,6 @@ function getBookingData(bookingData){
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 if(data.data.payment.message == "付款成功"){
                     window.location.href = "/thankyou?number=" + data.data.number
                 }
