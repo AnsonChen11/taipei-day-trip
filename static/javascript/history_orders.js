@@ -6,6 +6,7 @@ function fetchApiOrders(){
     fetch("/api/orders/" + user_id)
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         if(data.message === "未登入系統"){
             location.href="/";
             return
@@ -92,20 +93,20 @@ function createElementForNoHistoryOrders(){
 }
 
 
-function convertDateFormat(data){
-    let timeString = data;
-    let timeObject = new Date(timeString);
-
+function convertDateFormat(data) {
     const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "GMT",
     };
-    let formattedTime = new Intl.DateTimeFormat("ko-KR", options).format(timeObject);
-
-    return formattedTime
-}
+    const dateString = data.replace("GMT", "UTC");
+    const date = new Date(dateString);
+    const formattedTime = new Intl.DateTimeFormat("ko-KR", options).format(date);
+    return formattedTime;
+  }
+  

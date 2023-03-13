@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "components/head.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/member.css') }}">
+    <script src="{{ url_for('static', filename='/javascript/member.js')}}" defer></script>
+</head>
+<body>
+    {% include "components/nav.html" %}
+    {% include "components/login.html" %}
+    <main>
+        <div class = "member_view">
+            <div class="member_profile_card">
+                <!-- <form action="/somewhere/to/upload" enctype="multipart/form-data"> -->
+
+                <!-- </form> -->
+                <div class="upload_profile">
+                    <div class="profile_pic_container">
+                        <img id="profile_pic" class="profile_pic">
+                    </div>
+                    <input type="file" id="file-uploader" accept="image/gif, image/jpeg, image/png" style="display: none;">
+                    <label for="file-uploader" class="file-uploader">
+                        <img class="icon" src="/static/images/upload.png" alt="上傳檔案">
+                    </label>
+                </div>
+                <div class="profile_name"></div>
+                <div class="profile_history_orders">我的訂單紀錄</div>
+            </div>
+            <div class="member_info_card">
+                <div class="member_info_title">我的帳號管理</div>
+                <div class="member_information">
+                    <div>
+                        <label for="member_name" class="member_name">會員姓名(必填)</label>
+                        <input type="text" name="member_name" id="member_name">
+                    </div>
+                    <div>
+                        <label for="member_email" class="member_email">電子信箱(必填)</label>
+                        <input type="text" name="member_email" id="member_email">
+                    </div>
+                    <div>
+                        <label for="member_phone" class="member_phone">手機號碼</label>
+                        <input type="text" name="member_phone" id="member_phone" maxlength="10">
+                    </div>
+                </div>
+                <div class="button_info">
+                    <div class="save_info">
+                        <div>確認儲存</div>
+                    </div>
+                    <div class="cancel_info">
+                        <div>取消修改</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include "components/footer.html" %}
+</body>

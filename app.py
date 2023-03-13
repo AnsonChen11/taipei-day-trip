@@ -5,6 +5,7 @@ from api.booking.booking import booking
 from api.thankyou.thankyou import thankyou
 from api.orders.orders import orders
 from api.historyOrders.history_orders import history_orders
+from api.member.member import member
 
 app=Flask(__name__)
 
@@ -19,11 +20,12 @@ app.register_blueprint(booking)
 app.register_blueprint(thankyou)
 app.register_blueprint(orders)
 app.register_blueprint(history_orders)
+app.register_blueprint(member)
 
 # Pages
 @app.route("/")
 def index():
 	return render_template("index.html")
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000, debug=True)

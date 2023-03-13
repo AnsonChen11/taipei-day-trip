@@ -1,0 +1,143 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    padding-top: 54px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #666666;
+}
+main{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.member_view{
+    display: flex;
+    width: 70%;
+    /* height: 400px; */
+    justify-content: center;
+}
+.member_profile_card{
+    width: 300px;
+    border-radius: 10px;
+    background-color: #6d978e;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 15px;
+}
+.upload_profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.profile_pic_container{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+img.profile_pic{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.file-uploader{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+img.icon{
+    width: 100%;
+    height: 100%;
+}
+.profile_name{
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+}
+.profile_history_orders{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: white;
+    cursor: pointer;
+}
+.profile_history_orders:hover{
+    transform: scale(1.1);
+}
+.member_info_card{
+    margin-left: 15px;
+    width: 60%;
+    background-color: #d8d8d8;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.member_info_title{
+    padding: 5px;
+    font-size: 20px;
+    width: 130px;
+    color: white;
+    background-color: #649188;
+    border-radius: 0 20px 20px 0;
+}
+.member_information{
+    margin: 30px 30px 0 30px;
+}
+.member_information > div{
+    margin-bottom: 15px;
+}
+.member_information input{
+    width: 100%;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.member_information input:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+.button_info{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+.save_info, .cancel_info{
+    width: 100px;
+    height: 40px;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 0 20px;
+}
+.save_info{
+    background-color: rgb(70, 144, 70);
+}
+.save_info:hover{
+    cursor: pointer;
+    background-color: rgb(48, 111, 48);
+}
+.cancel_info{
+    background-color: rgb(169, 48, 48)
+}
+.cancel_info:hover{
+    cursor: pointer;
+    background-color: rgb(139, 23, 23)
+}

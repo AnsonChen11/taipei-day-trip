@@ -22,7 +22,6 @@ window.onload = async function(){
             dotSpan.setAttribute("dot_id", i)
             dot.appendChild(dotSpan)
         }
-        
         const attraction = document.querySelector(".profile");
         const attractionDiv = document.createElement("div");
         attractionDiv.textContent = data.data.name;
@@ -53,6 +52,9 @@ window.onload = async function(){
         transportation.appendChild(transportationSpan);
         
         showSlides(slideIndex)
+        let PositionLat = data.data.lat
+        let PositionLon = data.data.lng
+        initMap(PositionLat, PositionLon)
     })  
 }
 
@@ -117,7 +119,7 @@ function showSlides(n){
 const btn = document.querySelector(".btn")
 btn.addEventListener("click", function(){
     removeErrorMessage()
-    if(document.cookie){
+    if(getCookie("token")){
         let attractionId = location.pathname.slice(12,);
         let date = document.querySelector(".date").value;
         let time = document.querySelector("input[name='radio']:checked").value;
@@ -153,11 +155,19 @@ btn.addEventListener("click", function(){
             dateDiv.appendChild(dateMessage)
         }
     }
-    if(!document.cookie){
+    if(!getCookie("token")){
         overlay.style.display = "block";
         login.style.display = "block"
     }
 })
+/*--------------------function of get cookie--------------------*/
+function getCookie(key){
+	let value = "; " + document.cookie;
+	let parts = value.split("; " + key + "=");
+	if(parts.length === 2){
+		return parts.pop().split(";").shift();
+	}
+}
 /*--------------------function of remove error message--------------------*/
 function removeErrorMessage(){
     const loginErrorMessage = document.querySelector(".loginErrorMessage")
@@ -166,8 +176,36 @@ function removeErrorMessage(){
     }
 }
 /* ---------------------------datepicker only allow tomorrow onwards----------------------------- */
-const date = document.querySelector('.date');
+const date = document.querySelector(".date");
 
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 date.min = tomorrow.toISOString().split('T')[0];
+
+/* ---------------------------google map APIs----------------------------- */
+let map;
+
+function initMap(PositionLat, PositionLon){
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: PositionLat, lng: PositionLon },
+    zoom: 16,
+  });
+    const marker = new google.maps.Marker({
+    position: { lat: PositionLat, lng: PositionLon },
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    });
+    marker.addListener("click", toggleBounce);
+}
+
+function toggleBounce(){
+    if(marker.getAnimation() !== null){
+      marker.setAnimation(null);
+    } 
+    else{
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+window.initMap = initMap;

@@ -4,6 +4,7 @@
     {% include "components/head.html" %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/attraction.css') }}">
     <script src="{{ url_for('static', filename='/javascript/attraction.js')}}" defer></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCufWlFvzrslAtYObz2fpta0UyKSbSnH34&callback=initMap"></script>
 </head>
 <body>
     {% include "components/nav.html" %}
@@ -13,8 +14,8 @@
             <div class="slideShowContainer">
                 <a class="previous"><img src="/static/images/btn_leftArrow.png"></a>
                 <a class="next"><img src="/static/images/btn_rightArrow.png"></a>
+                <div class="dots"></div>
             </div>
-            <div class="dots"></div>
             <div class="profile">
                 <div class="bookingCard">
                     <div class="details">
@@ -43,12 +44,17 @@
     </main><hr>
     <article>
         <div class="information">
-            <div class="description"></div>
-            <div class="infos_address">
-                <span class="list">景點地址：</span><br/>
+            <div class="information_container">
+                <div class="description"></div>
+                <div class="infos_address">
+                    <span class="list">景點地址：</span><br/>
+                </div>
+                <div class="infos_transport">
+                    <span class="list">交通方式：</span><br/>
+                </div>
             </div>
-            <div class="infos_transport">
-                <span class="list">交通方式：</span><br/>
+            <div class="map_container">
+                <div class="map" id="map"></div>
             </div>
         </div>
     </article>

@@ -25,44 +25,49 @@ main{
     padding-bottom: 50px;
 }
 .btn_leftArow, .btn_righttArow{
-    width: 36px;
-    height: 36px;
-}
-.slideShowContainer, .slideShow, .slideShow img{
-    width: 540px;
-    height: 406px;
-    padding-right: 15px;
+    width: 30px;
+    height: 30px;
 }
 .slideShowContainer{
+    width: 540px;
+    height: 100%;
+    margin-right: 15px;
     position: relative;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    vertical-align: bottom;
+    overflow: hidden;
 }
 .slideShow{
     display: none;
+    width: 100%;
+}
+.slideShow img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.previous{
+    position: absolute;
+    top: 50%;
+    left: 20px;
+}
+.next{
+    position: absolute;
+    top: 50%;
+    right: 20px;
 }
 .previous img, .next img{
-    width: 36px;
-    height: 36px;
     cursor: pointer;
-    top: 50%;
-    margin-top: -22px;
-    padding: 16px;
-    transition: 0.1s ease;
+    transition: 0.1s ease-in-out;
     user-select: none;
-}
-.previous img{
-    position: absolute;
-}
-.next img{
-    position: absolute;
-    right: 15px;
 }
 .dots{
     position: absolute;
+    bottom: 15px;
 }
 .dot{
-    position: relative;
-    top: 375px;
-    left: -320px;
     cursor: pointer;
     height: 12px;
     width: 12px;
@@ -74,23 +79,20 @@ main{
     transition: background-color 0.6s ease;
 }
 .active, .dot:hover{
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(129, 129, 129, 0.874);
 }
 .fade{
     animation-name: fade;
-    /* animation-duration: 0.25s; */
+    animation-duration: 0.8s;
 }
 @keyframes fade{
     from {opacity: .4}
     to {opacity: 1}
 }
-.slideShow img{
-    object-fit: cover;
-}
 .profile{
     width: 600px;
-    height: 400px;
-    padding-left: 15px;
+    height: 100%;
+    margin-left: 15px;
 }
 .attraction{
     font-size: 24px;
@@ -102,7 +104,7 @@ main{
 }
 .bookingCard{
     background-color: rgba(232,232,232);
-    padding: 20px;
+    padding: 18px 18px 18px 24px;
     border-radius: 5px;
     line-height: 40px
 }
@@ -165,7 +167,10 @@ article{
     color: #666666;
 }
 .information{
-    width: 1200px
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .description, .infos_address, .infos_transport{
     margin: 20px;
@@ -176,6 +181,20 @@ article{
 .list{
     font-weight: 700;
 }
+.map_container{
+	width: 90%;
+    height: 400px;
+	display: flex;
+	justify-content: center;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.map{
+	height: 100%;
+    width: 100%;
+    align-items: center;
+}
 
 @media(max-width : 1200px){
     .section{
@@ -185,8 +204,8 @@ article{
         align-items: center;
     }
     .slideShowContainer, .slideShow, .slideShow img{
-        padding-right: 0px;
         width: 100%;
+        margin-right: 0px;
     }
     .profile{
         padding-left: 0px;
