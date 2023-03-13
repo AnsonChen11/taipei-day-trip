@@ -15,6 +15,9 @@ Taipei-Day-Trip is a travel e-commerce website that allows users to browse or se
   - Credit Card CCV Code （驗證密碼）: 424
 
 # Demo
+### Infinite Scroll Attractions, Keyword Search, and Attraction Image Carousel
+![ezgif com-optimize](https://user-images.githubusercontent.com/110713031/224634802-9efd39be-d759-4e9f-b212-4958e19d5515.gif)
+### Shopping Cart System, Checking Ordering, Payment System, and Reviewing the Order History
 
 # Table of Contents
 - [Main Features](#main-features)
@@ -69,6 +72,7 @@ Taipei-Day-Trip is a travel e-commerce website that allows users to browse or se
 
 #### Third Party Library
 - bcrypt
+- Google Maps API
 
 #### Version Control
 - Git/GitHub
